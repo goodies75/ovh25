@@ -10,7 +10,8 @@ export default function FicheForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const response = await fetch("https://o-petit.com/profil/api/post-fiche.php", {
+    const response = await fetch("/api/post-fiche.php", {
+
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(fiche),
