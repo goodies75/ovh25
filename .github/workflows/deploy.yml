@@ -30,11 +30,12 @@ jobs:
     - name: Deploy to OVH via SSH
       uses: appleboy/ssh-action@v0.1.5
       with:
-        host: ${{ secrets.OVH_HOST }}
-        username: ${{ secrets.OVH_USERNAME }}
+        host: ssh.cluster023.hosting.ovh.net
+        username: opetitcorq
+        port: 22
         key: ${{ secrets.OVH_SSH_KEY }}
         script: |
-          cd /path/to/your/website
+          cd /home/opetitcorq/www
           git pull origin main
           cp -r deploy/* ./
-          echo "Deployment completed!"
+          echo "✅ Deployment completed successfully!"
