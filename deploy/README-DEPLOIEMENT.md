@@ -1,6 +1,6 @@
 # 🚀 Déploiement Opet Comics sur o-petit.com
 
-**🔄 Déploiement automatique configuré !** - Dernière mise à jour : 4 août 2025
+**🔄 Déploiement automatique configuré !** - Test de déploiement : 4 août 2025 - 17h30
 
 ## 📁 Fichiers à télécharger sur votre serveur
 
