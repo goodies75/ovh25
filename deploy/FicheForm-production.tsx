@@ -11,7 +11,7 @@ export default function FicheForm() {
     e.preventDefault();
 
     try {
-      // Utiliser le chemin relatif pour le déploiement
+      // Utiliser le chemin relatif pour o-petit.com
       const response = await fetch("./post-fiche.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

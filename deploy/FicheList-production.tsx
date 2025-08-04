@@ -17,7 +17,7 @@ export default function FicheList() {
     try {
       setLoading(true);
       setError(null);
-      // Utiliser le chemin relatif pour le déploiement
+      // Utiliser le chemin relatif pour o-petit.com
       const response = await fetch("./get-fiches.php");
       if (!response.ok) {
         throw new Error(`Erreur HTTP: ${response.status}`);
