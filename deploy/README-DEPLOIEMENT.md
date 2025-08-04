@@ -1,5 +1,7 @@
 # 🚀 Déploiement Opet Comics sur o-petit.com
 
+**🔄 Déploiement automatique configuré !** - Dernière mise à jour : 4 août 2025
+
 ## 📁 Fichiers à télécharger sur votre serveur
 
 Voici tous les fichiers que vous devez télécharger dans un dossier sur votre serveur o-petit.com :
