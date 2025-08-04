@@ -7,13 +7,17 @@ import FicheList from './components/FicheList';
 
 
 function App() {
-
-
   return (
-    <main className="min-h-screen bg-gray-100 p-6">
-      <FicheForm />
-      <hr />
-      <FicheList />
+    <main>
+      <div className="container">
+        <header className="header">
+          <h1>🎨 Opet Comics</h1>
+          <p>Gérez votre collection de fiches comics</p>
+        </header>
+        
+        <FicheForm />
+        <FicheList />
+      </div>
     </main>
   )
 }

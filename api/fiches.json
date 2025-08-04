@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1704067200000,
+    "titre": "Spider-Man: Into the Spider-Verse",
+    "description": "Une aventure révolutionnaire dans le multivers avec Miles Morales",
+    "image_url": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=400&fit=crop",
+    "created_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "id": 1704153600000,
+    "titre": "Batman: The Dark Knight Returns",
+    "description": "Le retour épique de Batman dans une Gotham dystopique",
+    "image_url": "https://images.unsplash.com/photo-1543832923-44667a44c804?w=300&h=400&fit=crop",
+    "created_at": "2024-01-02T00:00:00.000Z"
+  },
+  {
+    "id": 1704240000000,
+    "titre": "Watchmen",
+    "description": "Une déconstruction magistrale du genre super-héroïque",
+    "image_url": "https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?w=300&h=400&fit=crop",
+    "created_at": "2024-01-03T00:00:00.000Z"
+  },
+  {
+    "id": 1754305424534,
+    "titre": "okok",
+    "description": "tftft",
+    "image_url": "",
+    "created_at": "2025-08-04T11:03:44.534Z"
+  },
+  {
+    "id": 1754305528246,
+    "titre": "Zap 0",
+    "description": "r crumb\n",
+    "image_url": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1590958831i/9784806.jpg",
+    "created_at": "2025-08-04T11:05:28.246Z"
+  }
+]
