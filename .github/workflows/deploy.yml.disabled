@@ -1,8 +1,9 @@
-name: Deploy to OVH
+# DESACTIVE - Utiliser le deploiement Git natif OVH a la place
+# name: Deploy to OVH
 
-on:
-  push:
-    branches: [ main ]
+# on:
+#   push:
+#     branches: [ main ]
 
 jobs:
   deploy:
