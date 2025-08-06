@@ -20,23 +20,37 @@ export default function ComicDetailModal({ isOpen, onClose, fiche, onEdit, onDel
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={titre}>
       <div className="comic-detail-modal-body">
-        <div><strong>Titre :</strong> {titre}</div>
-        {edition && <div><strong>Édition :</strong> {edition}</div>}
-        {fiche.description && <div><strong>Description :</strong> {fiche.description}</div>}
-        {fiche.numero && <div><strong>Numéro :</strong> {fiche.numero}</div>}
-        {fiche.annee && <div><strong>Année :</strong> {fiche.annee}</div>}
-        {fiche.auteur_couverture && <div><strong>Auteur couverture :</strong> {fiche.auteur_couverture}</div>}
-        {fiche.image_url && (
-          <div style={{marginTop: '1rem'}}>
-            <img 
-              src={fiche.image_url} 
-              alt={titre} 
-              style={{maxWidth:'100%', maxHeight: '300px', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)'}} 
-            />
+        {/* Titre en haut */}
+        <div className="comic-detail-title">
+          <strong>Titre :</strong> {titre}
+        </div>
+        
+        {/* Layout desktop: Image à gauche, infos à droite */}
+        <div className="comic-detail-content">
+          {/* Image à gauche */}
+          {fiche.image_url && (
+            <div className="comic-detail-image">
+              <img 
+                src={fiche.image_url} 
+                alt={titre} 
+                style={{maxWidth:'100%', maxHeight: '300px', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)'}} 
+              />
+            </div>
+          )}
+          
+          {/* Informations à droite */}
+          <div className="comic-detail-info">
+            {edition && <div><strong>Édition :</strong> {edition}</div>}
+            {fiche.numero && <div><strong>Numéro :</strong> {fiche.numero}</div>}
+            {fiche.annee && <div><strong>Année :</strong> {fiche.annee}</div>}
+            {fiche.auteur_couverture && <div><strong>Auteur couverture :</strong> {fiche.auteur_couverture}</div>}
+            {fiche.description && <div><strong>Description :</strong> {fiche.description}</div>}
           </div>
-        )}
+        </div>
       </div>
-      <div className="comic-detail-modal-actions" style={{display:'flex',gap:'1rem',marginTop:'1rem', justifyContent: 'flex-end'}}>
+      
+      {/* Boutons en bas */}
+      <div className="comic-detail-modal-actions">
         <Button onClick={onEdit}>Modifier</Button>
         <Button variant="danger" onClick={onDelete}>Supprimer</Button>
       </div>

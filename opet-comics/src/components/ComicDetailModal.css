@@ -1,15 +1,93 @@
 .comic-detail-modal-body {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
   margin-bottom: 1rem;
 }
-.comic-detail-modal-body img {
-  border-radius: var(--border-radius-md);
-  box-shadow: var(--shadow-light);
+
+/* Titre en haut */
+.comic-detail-title {
+  font-size: 1.1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 1rem;
 }
+
+/* Layout principal: Image + Infos */
+.comic-detail-content {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+/* Image à gauche */
+.comic-detail-image {
+  flex-shrink: 0;
+  max-width: 200px;
+}
+
+.comic-detail-image img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-medium);
+}
+
+/* Informations à droite */
+.comic-detail-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.comic-detail-info > div {
+  line-height: 1.4;
+}
+
+.comic-detail-info strong {
+  color: var(--color-primary);
+  margin-right: 0.5rem;
+}
+
+/* Boutons d'action */
 .comic-detail-modal-actions {
   display: flex;
   gap: 1rem;
   justify-content: flex-end;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+}
+
+/* Responsive: Mobile */
+@media (max-width: 768px) {
+  .comic-detail-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .comic-detail-image {
+    max-width: 100%;
+    align-self: center;
+  }
+  
+  .comic-detail-modal-actions {
+    flex-direction: column;
+  }
+}
+
+/* Responsive: Petits écrans */
+@media (max-width: 480px) {
+  .comic-detail-title {
+    font-size: 1rem;
+  }
+  
+  .comic-detail-info {
+    gap: 0.5rem;
+  }
+  
+  .comic-detail-info > div {
+    font-size: 0.9rem;
+  }
 }
