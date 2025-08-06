@@ -36,6 +36,24 @@ git reset --hard origin/main
 echo "📁 Copie des fichiers de déploiement..."
 cp -r deploy/* ./
 
+# S'assurer que le .htaccess est présent pour React Router
+echo "🔧 Configuration du routing React Router..."
+if [ -f ".htaccess" ]; then
+    echo "✅ .htaccess déjà présent"
+else
+    echo "⚠️  .htaccess manquant - création en cours..."
+    cat << 'HTACCESS' > .htaccess
+RewriteEngine On
+RewriteBase /
+
+# Handle React Router
+RewriteRule ^index\.html$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L]
+HTACCESS
+fi
+
 # Vérification
 echo "✅ Fichiers déployés:"
 ls -la

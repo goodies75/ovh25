@@ -1,0 +1,42 @@
+# DESACTIVE - Utiliser le deploiement Git natif OVH a la place
+# name: Deploy to OVH
+
+# on:
+#   push:
+#     branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: |
+        cd opet-comics
+        npm install
+        
+    - name: Build application
+      run: |
+        cd opet-comics
+        npm run build
+        
+    - name: Deploy to OVH via SSH
+      uses: appleboy/ssh-action@v0.1.5
+      with:
+        host: ssh.cluster023.hosting.ovh.net
+        username: opetitcorq
+        port: 22
+        key: ${{ secrets.OVH_SSH_KEY }}
+        script: |
+          cd /home/opetitcorq/www
+          git pull origin main
+          cp -r deploy/* ./
+          echo "✅ Deployment completed successfully!"

@@ -1,0 +1,174 @@
+/* ComicCompactCard Component */
+.comic-compact-card {
+  transition: all var(--transition-normal);
+  border: 2px solid transparent;
+}
+
+.comic-compact-card:hover {
+  border-color: var(--color-primary-start);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-medium);
+}
+
+.comic-compact-card {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  align-items: start;
+}
+
+.compact-image-container {
+  width: 120px;
+  height: 160px;
+  border-radius: var(--border-radius-sm);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-border-light);
+  box-shadow: var(--shadow-light);
+}
+
+.compact-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.compact-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-border-light);
+  color: var(--color-text-muted);
+}
+
+.compact-placeholder-icon {
+  font-size: 1.5rem;
+  opacity: 0.6;
+}
+
+.compact-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  min-height: 160px;
+  justify-content: space-between;
+}
+
+.compact-header {
+  flex-grow: 1;
+}
+
+.compact-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-xs) 0;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  line-height: 1.3;
+}
+
+.compact-numero {
+  font-size: 0.9rem;
+  background: var(--color-primary-start);
+  color: var(--color-text-light);
+  padding: 2px 6px;
+  border-radius: var(--border-radius-xs);
+  font-weight: 600;
+}
+
+.compact-subtitle {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+  font-style: italic;
+  line-height: 1.2;
+}
+
+.compact-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.compact-publisher,
+.compact-year,
+.compact-state {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: 0.85rem;
+}
+
+.compact-icon {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+.compact-text {
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.compact-click-hint {
+  margin-top: auto;
+  padding-top: var(--spacing-xs);
+  border-top: 1px solid var(--color-border-light);
+}
+
+.compact-click-hint span {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+  opacity: 0.8;
+}
+
+/* Hover effects */
+.comic-compact-card:hover .compact-title {
+  color: var(--color-primary-start);
+}
+
+.comic-compact-card:hover .compact-click-hint span {
+  opacity: 1;
+  color: var(--color-primary-start);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .comic-compact-card {
+    grid-template-columns: 90px 1fr;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+  }
+  
+  .compact-image-container {
+    width: 90px;
+    height: 120px;
+  }
+  
+  .compact-title {
+    font-size: 1rem;
+  }
+  
+  .compact-subtitle {
+    font-size: 0.8rem;
+  }
+  
+  .compact-publisher,
+  .compact-year,
+  .compact-state {
+    font-size: 0.8rem;
+  }
+  
+  .compact-click-hint span {
+    font-size: 0.7rem;
+  }
+}

@@ -27,9 +27,9 @@ if (!$data) {
 }
 
 // Validation basique
-if (empty($data['titre']) || empty($data['description'])) {
+if (empty($data['nom_serie'])) {
     http_response_code(400);
-    echo json_encode(['error' => 'Titre et description requis']);
+    echo json_encode(['error' => 'Le nom de série est requis']);
     exit;
 }
 
@@ -43,11 +43,20 @@ if (file_exists($fichesFile)) {
     $fiches = json_decode($existingData, true) ?: [];
 }
 
-// Créer la nouvelle fiche
+// Créer la nouvelle fiche avec tous les champs
 $newFiche = [
-    'id' => time() * 1000 + rand(0, 999), // Simuler Date.now() de JavaScript
-    'titre' => trim($data['titre']),
-    'description' => trim($data['description']),
+    'id' => time() * 1000 + rand(0, 999),
+    'nom_serie' => trim($data['nom_serie']),
+    'numero' => isset($data['numero']) ? trim($data['numero']) : '',
+    'annee' => isset($data['annee']) ? trim($data['annee']) : '',
+    'numero_edition' => isset($data['numero_edition']) ? trim($data['numero_edition']) : '',
+    'editeur' => isset($data['editeur']) ? trim($data['editeur']) : '',
+    'auteur_couverture' => isset($data['auteur_couverture']) ? trim($data['auteur_couverture']) : '',
+    'autres_auteurs' => isset($data['autres_auteurs']) && is_array($data['autres_auteurs']) ? $data['autres_auteurs'] : [],
+    'titre_secondaire' => isset($data['titre_secondaire']) ? trim($data['titre_secondaire']) : '',
+    'etat' => isset($data['etat']) ? trim($data['etat']) : 'Très bon',
+    'isbn' => isset($data['isbn']) ? trim($data['isbn']) : '',
+    'description' => isset($data['description']) ? trim($data['description']) : '',
     'image_url' => isset($data['image_url']) ? trim($data['image_url']) : '',
     'created_at' => date('c') // Format ISO 8601
 ];
@@ -59,7 +68,7 @@ $fiches[] = $newFiche;
 if (file_put_contents($fichesFile, json_encode($fiches, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE))) {
     echo json_encode([
         'success' => true,
-        'message' => 'Fiche ajoutée avec succès',
+        'message' => 'Comic ajouté avec succès',
         'data' => $newFiche
     ]);
 } else {

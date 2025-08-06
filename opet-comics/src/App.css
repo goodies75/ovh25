@@ -1,42 +1,266 @@
+/* Import des variables */
+@import './styles/variables.css';
+
+/* Styles spécifiques à l'App */
 #root {
-  max-width: 1280px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  width: 100%;
+}
+
+/* Container pour les sections */
+.cards-container {
+  max-width: 1600px;
   margin: 0 auto;
-  padding: 2rem;
+}
+
+.cards-container h2 {
+  color: var(--color-text-light);
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-xl);
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Styles spécifiques aux comics */
+.comic-card {
+  position: relative;
+  max-width: 100%;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.comic-content {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg);
+}
+
+.comic-info {
+  flex: 1;
+  min-width: 0;
+  /* Pour permettre le text-wrap */
+}
+
+.comic-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.comic-serie {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.comic-numero {
+  background: var(--color-primary-gradient);
+  color: var(--color-text-light);
+  padding: 4px var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.comic-titre-secondaire {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-sm) 0;
+  font-style: italic;
+}
+
+.comic-details {
+  margin-bottom: var(--spacing-md);
+}
+
+.comic-details p {
+  margin: 4px 0;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+.comic-editeur,
+.comic-annee,
+.comic-edition,
+.comic-auteur,
+.comic-auteurs,
+.comic-etat,
+.comic-isbn {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.comic-description {
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin-bottom: var(--spacing-md);
+  font-size: 0.95rem;
+}
+
+.comic-image-container {
+  flex-shrink: 0;
+  width: 120px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.comic-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--shadow-light);
+}
+
+.comic-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-light-gray);
+  border-radius: var(--border-radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--color-border-light);
+}
+
+.placeholder-icon {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-xs);
+  opacity: 0.6;
+}
+
+.placeholder-text {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.card-date {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-top: var(--spacing-sm);
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--color-border-light);
+}
+
+/* Formulaire comics - sections organisées */
+.comic-form {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.form-section {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.form-section h3 {
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-md);
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+}
+
+/* Gestion des auteurs avec tags */
+.auteurs-input {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+}
+
+.btn-add-author {
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: var(--color-success);
+  color: var(--color-text-light);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  font-size: 0.9rem;
+}
+
+.btn-add-author:hover {
+  background: #218838;
+}
+
+.auteurs-list {
+  margin-top: var(--spacing-sm);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.auteur-tag {
+  background: rgba(102, 126, 234, 0.2);
+  color: var(--color-text-light);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: 0.9rem;
+}
+
+.btn-remove-author {
+  background: none;
+  border: none;
+  color: #ff6b6b;
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 0;
+  margin-left: var(--spacing-xs);
+  transition: opacity var(--transition-fast);
+}
+
+.btn-remove-author:hover {
+  opacity: 0.7;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .comic-content {
+    flex-direction: column;
   }
-  to {
-    transform: rotate(360deg);
+
+  .comic-image-container {
+    width: 100%;
+    height: 200px;
+    order: -1;
   }
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  .comic-header {
+    flex-direction: column;
+    align-items: flex-start;
   }
-}
 
-.card {
-  padding: 2em;
-}
+  .form-row {
+    grid-template-columns: 1fr;
+  }
 
-.read-the-docs {
-  color: #888;
+  .auteurs-input {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }

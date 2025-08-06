@@ -1,0 +1,101 @@
+/* Composant Button */
+.btn {
+  border-radius: var(--border-radius-sm);
+  border: 1px solid transparent;
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  min-height: 44px; /* Accessibilité tactile */
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Variantes de boutons */
+.btn--primary {
+  background: var(--color-btn-primary);
+  color: var(--color-text-light);
+  border: none;
+}
+
+.btn--primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+.btn--danger {
+  background-color: var(--color-btn-danger);
+  color: var(--color-text-light);
+  border: none;
+}
+
+.btn--danger:hover:not(:disabled) {
+  background-color: var(--color-btn-danger-hover);
+  transform: translateY(-1px);
+}
+
+.btn--cancel {
+  background-color: var(--color-btn-cancel);
+  color: var(--color-text-light);
+  border: none;
+}
+
+.btn--cancel:hover:not(:disabled) {
+  background-color: var(--color-btn-cancel-hover);
+}
+
+.btn--delete {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  width: 30px;
+  height: 30px;
+  border: none;
+  background-color: var(--color-btn-danger);
+  color: var(--color-text-light);
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  opacity: 0.8;
+  padding: 0;
+}
+
+.btn--delete:hover:not(:disabled) {
+  opacity: 1;
+  background-color: var(--color-btn-danger-hover);
+  transform: scale(1.1);
+}
+
+/* Bouton pleine largeur */
+.btn--full-width {
+  width: 100%;
+}
+
+/* Tailles de boutons */
+.btn--small {
+  padding: var(--spacing-xs) var(--spacing-md);
+  font-size: 0.875em;
+  min-height: 36px;
+}
+
+.btn--large {
+  padding: var(--spacing-lg) var(--spacing-xl);
+  font-size: 1.125em;
+  min-height: 52px;
+}
