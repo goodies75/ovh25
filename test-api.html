@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test API Post Fiche</title>
+</head>
+<body>
+    <h1>Test API Post Fiche</h1>
+    <button onclick="testAPI()">Tester l'ajout d'un comic</button>
+    <div id="result"></div>
+
+    <script>
+    async function testAPI() {
+        const testData = {
+            nom_serie: "Test Comic",
+            numero: "1",
+            annee: "2025",
+            editeur: "Test Publisher",
+            auteur_couverture: "Test Author",
+            autres_auteurs: [],
+            etat: "Très bon",
+            description: "Comic de test"
+        };
+
+        try {
+            const response = await fetch("./post-fiche.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(testData)
+            });
+
+            console.log("Response status:", response.status);
+            console.log("Response headers:", response.headers);
+            
+            const result = await response.json();
+            console.log("Résultat:", result);
+            
+            document.getElementById("result").innerHTML = 
+                "<h3>Résultat:</h3><pre>" + JSON.stringify(result, null, 2) + "</pre>";
+                
+        } catch (error) {
+            console.error("Erreur:", error);
+            document.getElementById("result").innerHTML = 
+                "<h3>Erreur:</h3><p style='color: red;'>" + error.message + "</p>";
+        }
+    }
+    </script>
+</body>
+</html>

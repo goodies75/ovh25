@@ -149,20 +149,3 @@ if ($success) {
  * 8. React rafraîchit la liste ou affiche erreur
  */
 ?>
-];
-
-// Ajouter la nouvelle fiche
-$fiches[] = $newFiche;
-
-// Sauvegarder
-if (file_put_contents($fichesFile, json_encode($fiches, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE))) {
-    echo json_encode([
-        'success' => true,
-        'message' => 'Comic ajouté avec succès',
-        'data' => $newFiche
-    ]);
-} else {
-    http_response_code(500);
-    echo json_encode(['error' => 'Erreur lors de la sauvegarde']);
-}
-?>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button, Card, Input } from "./ui";
+import PhotoCapture from "./PhotoCapture";
 
 interface Fiche {
   nom_serie: string;
@@ -33,6 +34,8 @@ export default function FicheForm() {
   });
 
   const [nouvelAuteur, setNouvelAuteur] = useState("");
+  const [showPhotoCapture, setShowPhotoCapture] = useState(false);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
 
   const etats = ["Neuf", "Très bon", "Bon", "Moyen", "Abîmé"];
 
@@ -50,6 +53,67 @@ export default function FicheForm() {
     setFiche({
       ...fiche,
       autres_auteurs: fiche.autres_auteurs.filter((_, i) => i !== index)
+    });
+  };
+
+  // ========== GESTION DES PHOTOS ==========
+  const handlePhotoCapture = async (imageData: string, fileName: string) => {
+    setIsUploadingImage(true);
+    
+    try {
+      let result;
+      
+      // En développement local, utiliser le mock
+      if (window.location.hostname === 'localhost' && (window as any).mockUpload) {
+        console.log('Mode développement: utilisation du mock upload');
+        result = await (window as any).mockUpload(imageData, fileName);
+      } else {
+        // En production, utiliser l'API réelle
+        const formData = new FormData();
+        formData.append('imageData', imageData);
+        formData.append('filename', fileName);
+        
+        const response = await fetch('./upload-image.php', {
+          method: 'POST',
+          body: formData
+        });
+        
+        result = await response.json();
+      }
+      
+      if (result.success) {
+        // Utiliser l'image medium pour la fiche
+        const mediumImage = result.images.medium;
+        setFiche({
+          ...fiche,
+          image_url: mediumImage.url
+        });
+        
+        alert('Photo ajoutée avec succès !');
+      } else {
+        throw new Error(result.error || 'Erreur upload');
+      }
+    } catch (error) {
+      console.error('Erreur upload photo:', error);
+      alert('Erreur lors de l\'upload de la photo');
+    } finally {
+      setIsUploadingImage(false);
+      setShowPhotoCapture(false);
+    }
+  };
+
+  const openPhotoCapture = () => {
+    setShowPhotoCapture(true);
+  };
+
+  const closePhotoCapture = () => {
+    setShowPhotoCapture(false);
+  };
+
+  const removeImage = () => {
+    setFiche({
+      ...fiche,
+      image_url: ""
     });
   };
 
@@ -224,13 +288,50 @@ export default function FicheForm() {
             </div>
           </div>
 
+          {/* ========== SECTION PHOTO DE COUVERTURE ========== */}
           <div className="form-group">
-            <input
-              className="form-input"
-              placeholder="URL de l'image"
-              value={fiche.image_url}
-              onChange={(e) => setFiche({ ...fiche, image_url: e.target.value })}
-            />
+            <label className="form-label">📸 Photo de Couverture</label>
+            
+            {/* Aperçu de l'image actuelle */}
+            {fiche.image_url && (
+              <div className="image-preview-container">
+                <img 
+                  src={fiche.image_url} 
+                  alt="Aperçu couverture" 
+                  className="image-preview"
+                />
+                <button 
+                  type="button" 
+                  onClick={removeImage}
+                  className="remove-image-btn"
+                  title="Supprimer l'image"
+                >
+                  🗑️
+                </button>
+              </div>
+            )}
+            
+            {/* Boutons d'action photo */}
+            <div className="photo-actions">
+              <button 
+                type="button" 
+                onClick={openPhotoCapture}
+                className="photo-capture-btn"
+                disabled={isUploadingImage}
+              >
+                {isUploadingImage ? '⏳ Upload...' : '📷 Prendre/Choisir Photo'}
+              </button>
+              
+              <div className="divider-text">ou</div>
+              
+              {/* Input URL manuel (pour compatibilité) */}
+              <input
+                className="form-input url-input"
+                placeholder="URL de l'image (optionnel)"
+                value={fiche.image_url}
+                onChange={(e) => setFiche({ ...fiche, image_url: e.target.value })}
+              />
+            </div>
           </div>
 
           <div className="form-group">
@@ -248,6 +349,14 @@ export default function FicheForm() {
           ➕ Ajouter le Comic
         </Button>
       </form>
+
+      {/* ========== MODAL DE PRISE DE PHOTO ========== */}
+      {showPhotoCapture && (
+        <PhotoCapture
+          onPhotoCapture={handlePhotoCapture}
+          onCancel={closePhotoCapture}
+        />
+      )}
     </Card>
   );
 }

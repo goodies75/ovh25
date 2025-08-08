@@ -1,0 +1,245 @@
+/* ==================== OVERLAY ET MODAL ==================== */
+.photo-capture-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.photo-capture-modal {
+  background: white;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* ==================== EN-TÊTE ==================== */
+.photo-capture-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e0e0e0;
+  background: #f8f9fa;
+}
+
+.photo-capture-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+  padding: 0.25rem;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-btn:hover {
+  background: #f0f0f0;
+  color: #333;
+}
+
+/* ==================== CONTENU PRINCIPAL ==================== */
+.photo-capture-content {
+  padding: 1.5rem;
+}
+
+/* ==================== SÉLECTION DU MODE ==================== */
+.photo-mode-selection {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.camera-btn, .file-upload-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin: 0.5rem;
+  min-width: 200px;
+}
+
+.camera-btn:hover, .file-upload-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.divider {
+  margin: 1.5rem 0;
+  color: #666;
+  font-style: italic;
+}
+
+/* ==================== VUE CAMÉRA ==================== */
+.camera-view {
+  text-align: center;
+}
+
+.camera-preview {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 12px;
+  background: #000;
+}
+
+.camera-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  gap: 1rem;
+}
+
+.cancel-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  flex: 1;
+}
+
+.capture-btn {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.1rem;
+  flex: 2;
+}
+
+.capture-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+}
+
+/* ==================== APERÇU DE LA PHOTO ==================== */
+.photo-preview {
+  text-align: center;
+}
+
+.preview-image {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.preview-controls {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.retake-btn {
+  background: #ffc107;
+  color: #333;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  flex: 1;
+}
+
+.confirm-btn {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  flex: 2;
+}
+
+.retake-btn:hover, .confirm-btn:hover {
+  transform: translateY(-1px);
+}
+
+/* ==================== RESPONSIVE MOBILE ==================== */
+@media (max-width: 768px) {
+  .photo-capture-overlay {
+    padding: 0.5rem;
+  }
+  
+  .photo-capture-modal {
+    max-height: 95vh;
+  }
+  
+  .photo-capture-content {
+    padding: 1rem;
+  }
+  
+  .camera-btn, .file-upload-btn {
+    min-width: 100%;
+    margin: 0.5rem 0;
+  }
+  
+  .camera-controls, .preview-controls {
+    flex-direction: column;
+  }
+  
+  .camera-preview, .preview-image {
+    max-width: 100%;
+  }
+}
+
+/* ==================== ÉTATS DE CHARGEMENT ==================== */
+.camera-btn:disabled, .file-upload-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ==================== ANIMATIONS ==================== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.photo-capture-modal {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* ==================== FOCUS ET ACCESSIBILITÉ ==================== */
+button:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+input[type="file"]:focus + label {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}

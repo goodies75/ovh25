@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Upload Photos Comics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .test-section {
+            border: 1px solid #ddd;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+        .result {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .image-item {
+            text-align: center;
+        }
+        .image-item img {
+            max-width: 100%;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .image-item p {
+            font-size: 0.8rem;
+            color: #666;
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test Module Photo Comics</h1>
+    
+    <div class="test-section">
+        <h2>📤 Test Upload Fichier</h2>
+        <input type="file" id="fileInput" accept="image/*" />
+        <button onclick="testFileUpload()">Tester Upload</button>
+        
+        <div id="fileResult" class="result" style="display: none;"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>📷 Test Camera (si disponible)</h2>
+        <button onclick="testCamera()">Tester Caméra</button>
+        <video id="video" style="display: none; max-width: 300px;"></video>
+        <canvas id="canvas" style="display: none;"></canvas>
+        
+        <div id="cameraResult" class="result" style="display: none;"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>🖼️ Images Générées</h2>
+        <div id="generatedImages" class="image-grid"></div>
+    </div>
+
+    <script>
+        // ========== TEST UPLOAD FICHIER ==========
+        async function testFileUpload() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Veuillez sélectionner un fichier');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('image', file);
+            
+            const resultDiv = document.getElementById('fileResult');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '⏳ Upload en cours...';
+            
+            try {
+                const response = await fetch('./upload-image.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    resultDiv.innerHTML = `
+                        <h3>✅ Upload Réussi</h3>
+                        <p><strong>Fichier:</strong> ${result.original_filename}</p>
+                        <p><strong>Traité le:</strong> ${result.processed_at}</p>
+                    `;
+                    
+                    displayGeneratedImages(result.images);
+                } else {
+                    resultDiv.innerHTML = `<h3>❌ Erreur</h3><p>${result.error}</p>`;
+                }
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<h3>❌ Erreur Réseau</h3><p>${error.message}</p>`;
+            }
+        }
+        
+        // ========== TEST CAMÉRA ==========
+        async function testCamera() {
+            const video = document.getElementById('video');
+            const canvas = document.getElementById('canvas');
+            const resultDiv = document.getElementById('cameraResult');
+            
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: 'environment' }
+                });
+                
+                video.srcObject = stream;
+                video.style.display = 'block';
+                video.play();
+                
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `
+                    <h3>📷 Caméra Active</h3>
+                    <button onclick="capturePhoto()">Capturer Photo</button>
+                    <button onclick="stopCamera()">Arrêter</button>
+                `;
+                
+            } catch (error) {
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `<h3>❌ Caméra Non Disponible</h3><p>${error.message}</p>`;
+            }
+        }
+        
+        // ========== CAPTURE PHOTO ==========
+        async function capturePhoto() {
+            const video = document.getElementById('video');
+            const canvas = document.getElementById('canvas');
+            
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0);
+            
+            const imageData = canvas.toDataURL('image/jpeg', 0.8);
+            
+            // Upload via base64
+            const formData = new FormData();
+            formData.append('imageData', imageData);
+            formData.append('filename', `camera_capture_${Date.now()}.jpg`);
+            
+            const resultDiv = document.getElementById('cameraResult');
+            resultDiv.innerHTML = '⏳ Upload photo...';
+            
+            try {
+                const response = await fetch('./upload-image.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    resultDiv.innerHTML = `
+                        <h3>✅ Photo Capturée et Uploadée</h3>
+                        <p><strong>Traité le:</strong> ${result.processed_at}</p>
+                    `;
+                    
+                    displayGeneratedImages(result.images);
+                    stopCamera();
+                } else {
+                    resultDiv.innerHTML = `<h3>❌ Erreur Upload</h3><p>${result.error}</p>`;
+                }
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<h3>❌ Erreur</h3><p>${error.message}</p>`;
+            }
+        }
+        
+        // ========== ARRÊTER CAMÉRA ==========
+        function stopCamera() {
+            const video = document.getElementById('video');
+            
+            if (video.srcObject) {
+                video.srcObject.getTracks().forEach(track => track.stop());
+                video.srcObject = null;
+                video.style.display = 'none';
+            }
+        }
+        
+        // ========== AFFICHER IMAGES GÉNÉRÉES ==========
+        function displayGeneratedImages(images) {
+            const container = document.getElementById('generatedImages');
+            
+            let html = '';
+            for (const [format, data] of Object.entries(images)) {
+                html += `
+                    <div class="image-item">
+                        <img src="${data.url}" alt="${format}" />
+                        <p><strong>${format.toUpperCase()}</strong></p>
+                        <p>${data.width}x${data.height}</p>
+                        <p>${(data.size / 1024).toFixed(1)} KB</p>
+                    </div>
+                `;
+            }
+            
+            container.innerHTML = html;
+        }
+    </script>
+</body>
+</html>

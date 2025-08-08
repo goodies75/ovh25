@@ -6,11 +6,13 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': {
-        target: 'http://localhost:3001',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
-      }
+      // APIs PHP vers le serveur PHP local
+      '/get-fiches.php': 'http://localhost:8080',
+      '/post-fiche.php': 'http://localhost:8080',
+      '/update-fiche.php': 'http://localhost:8080',
+      '/delete-fiche.php': 'http://localhost:8080',
+      '/upload-image.php': 'http://localhost:8080',
+      '/uploads': 'http://localhost:8080'
     }
   }
 })

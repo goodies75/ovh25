@@ -1,0 +1,46 @@
+# ==================== SÉCURISATION DU DOSSIER UPLOADS ====================
+# 
+# Protection contre l'exécution de scripts malveillants
+# Autorisation uniquement des images
+#
+# OBJECTIF: Empêcher l'upload de fichiers PHP ou autres scripts
+# MÉTHODE: Bloquer l'exécution, autoriser seulement les images
+
+# Désactiver l'exécution de PHP dans ce dossier
+php_flag engine off
+
+# Types MIME autorisés (images uniquement)
+<FilesMatch "\.(jpg|jpeg|png|gif|webp)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
+# Bloquer tous les autres types de fichiers
+<FilesMatch "\.(?!(jpg|jpeg|png|gif|webp)$)[^.]+$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# Protection contre l'inclusion de fichiers
+<Files ~ "\.php$">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+# En-têtes de sécurité pour les images
+<IfModule mod_headers.c>
+    # Cache des images (1 mois)
+    Header set Cache-Control "public, max-age=2592000"
+    
+    # Empêcher l'interprétation comme autre chose qu'une image
+    Header set X-Content-Type-Options "nosniff"
+    
+    # Protection contre l'embedding dans d'autres sites
+    Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+# Bloquer les tentatives d'accès direct aux fichiers de configuration
+<Files ".htaccess">
+    Order Deny,Allow
+    Deny from all
+</Files>

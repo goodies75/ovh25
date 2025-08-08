@@ -1,6 +1,88 @@
 /* Import des variables */
 @import './styles/variables.css';
 
+/* ==================== STYLES PHOTO CAPTURE ==================== */
+/* Styles pour l'intégration photo dans le formulaire */
+.image-preview-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.image-preview {
+  max-width: 200px;
+  max-height: 300px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: block;
+}
+
+.remove-image-btn {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.8rem;
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+}
+
+.remove-image-btn:hover {
+  background: #c82333;
+  transform: scale(1.1);
+}
+
+.photo-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.photo-capture-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.photo-capture-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+}
+
+.photo-capture-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.divider-text {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  margin: 0.5rem 0;
+}
+
+.url-input {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* ==================== STYLES EXISTANTS ==================== */
+
 /* Styles spécifiques à l'App */
 #root {
   min-height: 100vh;
