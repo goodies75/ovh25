@@ -14,9 +14,9 @@ export default function HomePage({ statsData }: HomePageProps) {
     <div className="home-page">
       <div className="hero-section">
         <div className="hero-content">
-          <h2>🎨 Bienvenue dans Opet Comics</h2>
+          <h2>Bienvenue sur ma collection de Comics</h2>
           <p className="hero-description">
-            Gérez votre collection de bandes dessinées et comics avec style.
+            Ma collection de bandes dessinées et comics avec style.
             Ajoutez, organisez et consultez vos œuvres préférées en toute simplicité.
           </p>
         </div>

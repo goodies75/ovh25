@@ -1,2 +1,72 @@
-FallbackResource /index.html
+# =================================================================
+# CONFIGURATION APACHE POUR COMICS D'OLIVIER - OVH
+# =================================================================
+
+# Activation du module de réécriture
+RewriteEngine On
+
+# =================================================================
+# HEADERS CORS POUR LES APIS
+# =================================================================
+
+# Configuration CORS pour tous les fichiers PHP
+<FilesMatch "\.(php)$">
+    Header always set Access-Control-Allow-Origin "*"
+    Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+    Header always set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
+    Header always set Access-Control-Max-Age "1728000"
+</FilesMatch>
+
+# Gestion des requêtes OPTIONS (preflight CORS)
+RewriteCond %{REQUEST_METHOD} OPTIONS
+RewriteRule ^(.*)$ $1 [R=200,L]
+
+# =================================================================
+# ROUTAGE POUR L'APPLICATION REACT
+# =================================================================
+
+# Redirection des routes React vers index.html
+# SAUF pour les fichiers PHP, images, et ressources statiques
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/uploads/
+RewriteCond %{REQUEST_URI} !\.php$
+RewriteCond %{REQUEST_URI} !\.css$
+RewriteCond %{REQUEST_URI} !\.js$
+RewriteCond %{REQUEST_URI} !\.svg$
+RewriteCond %{REQUEST_URI} !\.png$
+RewriteCond %{REQUEST_URI} !\.jpg$
+RewriteCond %{REQUEST_URI} !\.jpeg$
+RewriteCond %{REQUEST_URI} !\.gif$
+RewriteCond %{REQUEST_URI} !\.webp$
+RewriteCond %{REQUEST_URI} !\.ico$
+RewriteRule ^(.*)$ /index.html [QSA,L]
+
+# =================================================================
+# CONFIGURATION PHP POUR OVH
+# =================================================================
+
+# Augmentation des limites PHP pour les uploads
+php_value upload_max_filesize 10M
+php_value post_max_size 10M
+php_value max_execution_time 30
+php_value memory_limit 128M
+
+# En production, gestion des erreurs
+php_flag display_errors Off
+php_flag log_errors On
+
+# =================================================================
+# OPTIMISATION ET CACHE
+# =================================================================
+
+# Configuration du cache pour les ressources statiques
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/jpg "access plus 1 month"
+</IfModule>
 

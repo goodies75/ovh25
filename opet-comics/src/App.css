@@ -1,6 +1,26 @@
 /* Import des variables */
 @import './styles/variables.css';
 
+/* ==================== LAYOUT PRINCIPAL ==================== */
+/* Espacement pour la navigation fixe */
+.main-content {
+  padding-top: 120px; /* Compensation pour navigation fixe desktop */
+  min-height: calc(100vh - 120px);
+}
+
+/* Responsive pour différentes tailles d'écran */
+@media (max-width: 768px) {
+  .main-content {
+    padding-top: 140px; /* Plus d'espace sur mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding-top: 160px; /* Encore plus d'espace sur très petit écran */
+  }
+}
+
 /* ==================== STYLES PHOTO CAPTURE ==================== */
 /* Styles pour l'intégration photo dans le formulaire */
 .image-preview-container {

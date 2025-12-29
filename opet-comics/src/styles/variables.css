@@ -1,3 +1,6 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Fascinate&display=swap');
+
 /* Variables globales pour les couleurs */
 :root {
   /* Couleurs principales */
@@ -59,6 +62,10 @@
   --spacing-lg: 20px;
   --spacing-xl: 30px;
   --spacing-xxl: 40px;
+  
+  /* Polices */
+  --font-fascinate: 'Fascinate', cursive;
+  --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   
   /* Transitions */
   --transition-fast: 0.2s ease;

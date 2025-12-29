@@ -10,10 +10,10 @@ import AdminStatus from './components/security/AdminStatus';
 function App() {
   return (
     <Router>
-      <main>
+      <Navigation />
+      
+      <main className="main-content">
         <div className="container">
-          <Navigation />
-
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/add" element={<AddPage />} />

@@ -37,6 +37,11 @@
 }
 
 @media (max-width: 768px) {
+  .comic-compact-card {
+    flex-direction: column;
+    align-items: center;
+  }
+
   .fiche-list {
     grid-template-columns: 1fr;
   }

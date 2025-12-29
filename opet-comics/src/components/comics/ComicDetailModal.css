@@ -3,6 +3,13 @@
   max-width: 100%;
 }
 
+.comic-detail-actions {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: flex-end;
+  margin-top: var(--spacing-lg);
+}
+
 .detail-main-info {
   display: flex;
   gap: var(--spacing-lg);
@@ -90,21 +97,25 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  .comic-detail-actions {
+    flex-direction: column;
+  }
+
   .detail-main-info {
     flex-direction: column;
     align-items: center;
     text-align: center;
   }
-  
+
   .detail-image {
     width: 120px;
     height: 160px;
   }
-  
+
   .detail-modal-actions {
     justify-content: center;
   }
-  
+
   .detail-modal-actions .btn {
     flex: 1;
     min-width: 100px;

@@ -1,6 +1,6 @@
 .admin-status {
   position: fixed;
-  top: 20px;
+  bottom: 20px;
   right: 20px;
   z-index: 1000;
   background: linear-gradient(135deg, #22c55e, #16a34a);
@@ -51,6 +51,7 @@
     transform: translateX(100%);
     opacity: 0;
   }
+
   to {
     transform: translateX(0);
     opacity: 1;
@@ -60,16 +61,16 @@
 /* Responsive */
 @media (max-width: 768px) {
   .admin-status {
-    top: 10px;
+    bottom: 10px;
     right: 10px;
     padding: 0.5rem 0.75rem;
   }
-  
+
   .admin-status-content {
     gap: 0.5rem;
     font-size: 0.8rem;
   }
-  
+
   .admin-status-text {
     display: none;
   }

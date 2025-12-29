@@ -33,7 +33,7 @@ export default function PinProtection({
 
     try {
       // Appel au serveur pour vérifier le PIN
-      const response = await fetch('/api/validate-pin.php', {
+      const response = await fetch('./validate-pin.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

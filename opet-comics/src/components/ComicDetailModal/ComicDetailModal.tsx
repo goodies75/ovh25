@@ -102,7 +102,7 @@ export default function ComicDetailModal({
                 
                 <div className="detail-item">
                   <span className="detail-label">⭐ État :</span>
-                  <span className="detail-value">{fiche.etat}</span>
+                  <span className="detail-value">{fiche.etat || 'Non renseigné'}</span>
                 </div>
                 
                 {fiche.isbn && (

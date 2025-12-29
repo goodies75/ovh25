@@ -59,10 +59,10 @@ export default function FicheForm() {
   // ========== GESTION DES PHOTOS ==========
   const handlePhotoCapture = async (imageData: string, fileName: string) => {
     setIsUploadingImage(true);
-    
+
     try {
       let result;
-      
+
       // En développement local, utiliser le mock
       if (window.location.hostname === 'localhost' && (window as any).mockUpload) {
         console.log('Mode développement: utilisation du mock upload');
@@ -70,25 +70,22 @@ export default function FicheForm() {
       } else {
         // En production, utiliser l'API réelle
         const formData = new FormData();
-        formData.append('imageData', imageData);
+        formData.append('image', imageData); // 'image' attendu par upload-image.php
         formData.append('filename', fileName);
-        
+
         const response = await fetch('./upload-image.php', {
           method: 'POST',
           body: formData
         });
-        
+
         result = await response.json();
       }
-      
-      if (result.success) {
-        // Utiliser l'image medium pour la fiche
-        const mediumImage = result.images.medium;
+
+      if (result.success && result.url) {
         setFiche({
           ...fiche,
-          image_url: mediumImage.url
+          image_url: result.url
         });
-        
         alert('Photo ajoutée avec succès !');
       } else {
         throw new Error(result.error || 'Erreur upload');
@@ -158,12 +155,11 @@ export default function FicheForm() {
 
   return (
     <Card className="form-container">
-      <h2>📚 Ajouter un Comic</h2>
       <form onSubmit={handleSubmit} className="comic-form">
 
         {/* Section principale */}
         <div className="form-section">
-          <h3>📖 Informations principales</h3>
+          <h3>Informations principales</h3>
 
           <div className="form-row">
             <Input
@@ -218,7 +214,7 @@ export default function FicheForm() {
 
         {/* Section auteurs */}
         <div className="form-section">
-          <h3>✍️ Auteurs</h3>
+          <h3>Auteurs</h3>
 
           <div className="form-group">
             <input
@@ -291,17 +287,17 @@ export default function FicheForm() {
           {/* ========== SECTION PHOTO DE COUVERTURE ========== */}
           <div className="form-group">
             <label className="form-label">📸 Photo de Couverture</label>
-            
+
             {/* Aperçu de l'image actuelle */}
             {fiche.image_url && (
               <div className="image-preview-container">
-                <img 
-                  src={fiche.image_url} 
-                  alt="Aperçu couverture" 
+                <img
+                  src={fiche.image_url}
+                  alt="Aperçu couverture"
                   className="image-preview"
                 />
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   onClick={removeImage}
                   className="remove-image-btn"
                   title="Supprimer l'image"
@@ -310,20 +306,20 @@ export default function FicheForm() {
                 </button>
               </div>
             )}
-            
+
             {/* Boutons d'action photo */}
             <div className="photo-actions">
-              <button 
-                type="button" 
+              <button
+                type="button"
                 onClick={openPhotoCapture}
                 className="photo-capture-btn"
                 disabled={isUploadingImage}
               >
                 {isUploadingImage ? '⏳ Upload...' : '📷 Prendre/Choisir Photo'}
               </button>
-              
+
               <div className="divider-text">ou</div>
-              
+
               {/* Input URL manuel (pour compatibilité) */}
               <input
                 className="form-input url-input"

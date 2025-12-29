@@ -70,3 +70,15 @@
   padding: var(--spacing-lg);
   font-size: 18px;
 }
+
+.form-input {
+  width: 100%;
+  padding: var(--spacing-md);
+  border: 2px solid var(--color-border-light);
+  border-radius: var(--border-radius-sm);
+  font-size: 16px;
+  font-family: inherit;
+  transition: border-color var(--transition-normal);
+  background-color: #fff !important;
+  color: #333 !important;
+}

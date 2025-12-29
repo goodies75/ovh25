@@ -36,22 +36,22 @@ export default function ListPage() {
   const [sortedFiches, setSortedFiches] = useState<Fiche[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   // Hook de sécurité
   const { isAuthorized, authorize } = useAdminAuth();
-  
+
   // États pour les modales
   const [selectedFiche, setSelectedFiche] = useState<Fiche | null>(null);
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [ficheToDelete, setFicheToDelete] = useState<Fiche | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
-  
+
   // États pour la sécurité
   const [showPinModal, setShowPinModal] = useState(false);
   const [pendingAction, setPendingAction] = useState<'edit' | 'delete' | null>(null);
   const [pendingFiche, setPendingFiche] = useState<Fiche | null>(null);
-  
+
   // États pour le tri
   const [sortBy, setSortBy] = useState<SortOption>('nom_serie');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
@@ -66,7 +66,7 @@ export default function ListPage() {
         throw new Error(`Erreur HTTP: ${response.status}`);
       }
       const data = await response.json();
-      
+
       // Normaliser les données pour compatibilité - préserver les données originales
       const normalizedFiches = data.map((fiche: any) => ({
         ...fiche, // Préserver toutes les données originales
@@ -86,7 +86,7 @@ export default function ListPage() {
         image_url: fiche.image_url || "",
         created_at: fiche.created_at
       }));
-      
+
       setFiches(normalizedFiches);
     } catch (err) {
       console.error("Erreur lors du fetch :", err);
@@ -99,7 +99,7 @@ export default function ListPage() {
   // Fonction de tri
   const sortFiches = (fiches: Fiche[], sortBy: SortOption, direction: SortDirection, searchTerm: string) => {
     let filtered = fiches;
-    
+
     // Filtrage par recherche
     if (searchTerm) {
       filtered = fiches.filter(fiche =>
@@ -109,12 +109,12 @@ export default function ListPage() {
         fiche.autres_auteurs.some(auteur => auteur.toLowerCase().includes(searchTerm.toLowerCase()))
       );
     }
-    
+
     // Tri
     const sorted = [...filtered].sort((a, b) => {
       let valueA: string | number = '';
       let valueB: string | number = '';
-      
+
       switch (sortBy) {
         case 'nom_serie':
           valueA = a.nom_serie.toLowerCase();
@@ -133,14 +133,14 @@ export default function ListPage() {
           valueB = new Date(b.created_at).getTime();
           break;
       }
-      
+
       if (direction === 'asc') {
         return valueA < valueB ? -1 : valueA > valueB ? 1 : 0;
       } else {
         return valueA > valueB ? -1 : valueA < valueB ? 1 : 0;
       }
     });
-    
+
     return sorted;
   };
 
@@ -174,14 +174,14 @@ export default function ListPage() {
   const handlePinSuccess = () => {
     authorize(); // Mettre à jour l'état d'autorisation
     setShowPinModal(false);
-    
+
     // Exécuter l'action en attente
     if (pendingAction === 'edit' && pendingFiche) {
       openEditModal(pendingFiche);
     } else if (pendingAction === 'delete' && pendingFiche) {
       setFicheToDelete(pendingFiche);
     }
-    
+
     // Nettoyer les états temporaires
     setPendingAction(null);
     setPendingFiche(null);
@@ -200,10 +200,10 @@ export default function ListPage() {
 
   const handleDeleteConfirm = async () => {
     if (!ficheToDelete) return;
-    
+
     try {
       setIsDeleting(true);
-      
+
       const response = await fetch('./delete-fiche.php', {
         method: 'DELETE',
         headers: {
@@ -239,8 +239,8 @@ export default function ListPage() {
   const handleSaveEdit = async (updatedFiche: Fiche) => {
     try {
       console.log('Sauvegarde de:', updatedFiche);
-      
-      // Appel à l'API de mise à jour
+
+      // Appel à l'API de mise à jour MySQL
       const response = await fetch('./update-fiche.php', {
         method: 'PUT',
         headers: {
@@ -248,21 +248,21 @@ export default function ListPage() {
         },
         body: JSON.stringify(updatedFiche),
       });
-      
+
       const result = await response.json();
-      
+
       if (result.success) {
         // Mettre à jour la liste locale
         setFiches(fiches.map(f => f.id === updatedFiche.id ? updatedFiche : f));
         setShowEditModal(false);
         alert('Comic mis à jour avec succès !');
-        
+
         // Rafraîchir la liste depuis le serveur pour être sûr
         fetchFiches();
       } else {
         throw new Error(result.error || 'Erreur lors de la sauvegarde');
       }
-      
+
     } catch (error) {
       console.error('Erreur lors de la sauvegarde:', error);
       alert('Erreur lors de la sauvegarde: ' + (error as Error).message);
@@ -298,7 +298,7 @@ export default function ListPage() {
             className="search-input"
           />
         </div>
-        
+
         <div className="sort-section">
           <span className="sort-label">Trier par :</span>
           <div className="sort-buttons">
@@ -324,7 +324,7 @@ export default function ListPage() {
               className={`sort-btn ${sortBy === 'date_added' ? 'sort-btn--active' : ''}`}
               onClick={() => handleSortChange('date_added')}
             >
-              Date d'ajout {sortBy === 'date_added' && (sortDirection === 'asc' ? '↑' : '↓')}
+              Ajout {sortBy === 'date_added' && (sortDirection === 'asc' ? '↑' : '↓')}
             </button>
           </div>
         </div>
@@ -337,20 +337,20 @@ export default function ListPage() {
           {searchTerm && <span> pour "{searchTerm}"</span>}
         </div>
       )}
-      
+
       {loading && (
         <div className="loading">
           <div className="spinner"></div>
           <p>Chargement de votre collection...</p>
         </div>
       )}
-      
+
       {error && (
         <div className="error">
           {error}
         </div>
       )}
-      
+
       {!loading && !error && sortedFiches.length === 0 && !searchTerm && (
         <div className="empty-state">
           <p>Aucune fiche dans votre collection</p>
@@ -364,7 +364,7 @@ export default function ListPage() {
           <small>Essayez avec d'autres mots-clés</small>
         </div>
       )}
-      
+
       {!loading && !error && sortedFiches.length > 0 && (
         <div className="fiche-list">
           {sortedFiches.map((fiche) => (
@@ -387,16 +387,16 @@ export default function ListPage() {
         title="Confirmer la suppression"
         actions={
           <>
-            <Button 
+            <Button
               variant="danger"
-              onClick={handleDeleteConfirm} 
+              onClick={handleDeleteConfirm}
               disabled={isDeleting}
             >
               {isDeleting ? 'Suppression...' : 'Oui, supprimer'}
             </Button>
-            <Button 
+            <Button
               variant="cancel"
-              onClick={handleDeleteCancel} 
+              onClick={handleDeleteCancel}
               disabled={isDeleting}
             >
               Annuler

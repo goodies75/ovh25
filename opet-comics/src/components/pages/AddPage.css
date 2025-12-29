@@ -11,6 +11,7 @@
 }
 
 .add-header h2 {
+  font-family: var(--font-fascinate);
   font-size: 2.5rem;
   color: var(--color-text-light);
   margin-bottom: var(--spacing-md);
@@ -84,4 +85,58 @@
   .tips-card {
     padding: var(--spacing-lg);
   }
+}
+
+/* Protection styles */
+.protection-notice {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.protection-card {
+  background: var(--color-bg-card);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xxl);
+  box-shadow: var(--shadow-medium);
+  text-align: center;
+  max-width: 500px;
+  border: 2px solid var(--color-primary);
+}
+
+.protection-card h3 {
+  font-size: 1.8rem;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.protection-card p {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-xl);
+  line-height: 1.6;
+}
+
+.auth-button {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-light);
+}
+
+.auth-button:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+.auth-button:active {
+  transform: translateY(0);
 }

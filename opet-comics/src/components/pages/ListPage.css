@@ -10,6 +10,7 @@
 }
 
 .list-header h2 {
+  font-family: var(--font-fascinate);
   font-size: 2.5rem;
   color: var(--color-text-light);
   margin-bottom: var(--spacing-sm);

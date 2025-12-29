@@ -7,10 +7,11 @@
 .hero-section {
   text-align: center;
   padding: var(--spacing-xxl) 0;
-  margin-bottom: var(--spacing-xxl);
+  margin-bottom: var(--spacing-xs);
 }
 
 .hero-content h2 {
+  font-family: var(--font-fascinate);
   font-size: 3rem;
   color: var(--color-text-light);
   margin-bottom: var(--spacing-lg);
@@ -192,17 +193,17 @@
   .hero-content h2 {
     font-size: 2.5rem;
   }
-  
+
   .hero-description {
     font-size: 1.1rem;
     padding: 0 var(--spacing-lg);
   }
-  
+
   .quick-actions {
     grid-template-columns: 1fr;
     gap: var(--spacing-lg);
   }
-  
+
   .features-grid {
     grid-template-columns: 1fr;
     gap: var(--spacing-md);
