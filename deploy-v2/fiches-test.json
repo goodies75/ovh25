@@ -1,0 +1,19 @@
+[
+  {
+    "id": 1754305528246,
+    "nom_serie": "Zap Comix",
+    "titre": "Zap 0",
+    "numero": "0",
+    "annee": "1967",
+    "numero_edition": "1",
+    "editeur": "Apex Novelties",
+    "auteur_couverture": "R. Crumb",
+    "autres_auteurs": ["Robert Crumb", "S. Clay Wilson"],
+    "titre_secondaire": "The First Underground Comic",
+    "etat": "Très bon",
+    "isbn": "",
+    "description": "Le premier comic underground de R. Crumb qui a révolutionné la bande dessinée américaine.",
+    "image_url": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1590958831i/9784806.jpg",
+    "created_at": "2025-08-04T11:05:28.246Z"
+  }
+]

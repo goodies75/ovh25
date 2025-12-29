@@ -1,0 +1,15 @@
+.comic-detail-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.comic-detail-modal-body img {
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-light);
+}
+.comic-detail-modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}

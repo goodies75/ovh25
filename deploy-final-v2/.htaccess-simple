@@ -1,0 +1,20 @@
+# Configuration simple pour OVH mutualisé
+RewriteEngine On
+
+# Routage pour React (version simplifiée)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !\.php$
+RewriteRule ^(.*)$ /index.html [QSA,L]
+
+# CORS pour PHP seulement
+<FilesMatch "\.php$">
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type"
+</FilesMatch>
+
+# Limits PHP basiques
+php_value upload_max_filesize 8M
+php_value post_max_size 8M
+php_value max_execution_time 30

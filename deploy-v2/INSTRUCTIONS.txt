@@ -1,0 +1,33 @@
+🚀 DÉPLOIEMENT V2 - COMICS D'OLIVIER
+=====================================
+
+📦 CONTENU À DÉPLOYER :
+Source : deploy-v2/
+Destination : public_html/ (sur OVH)
+
+📋 FICHIERS INCLUS :
+  ✅ index.html (Application React)
+  ✅ assets/ (CSS/JS)
+  ✅ *.php (APIs)
+  ✅ fiches-data.json (VOS DONNÉES)
+  ✅ .htaccess (Configuration)
+  ✅ uploads/ (Images)
+
+🔐 INFORMATIONS :
+  PIN Admin : @0149@
+  Données réelles : Zap 0 (R. Crumb)
+  Structure : JSON simple (titre, description, image_url)
+
+📝 ÉTAPES DE DÉPLOIEMENT :
+  1. Connectez-vous à votre FTP OVH
+  2. Naviguez vers public_html/
+  3. Supprimez les anciens fichiers
+  4. Uploadez TOUT le contenu de deploy-v2/
+  5. Vérifiez les permissions des dossiers uploads/
+
+🌐 APRÈS DÉPLOIEMENT :
+  ➡️ Testez : votresite.com
+  ➡️ Vérifiez que Zap 0 s'affiche
+  ➡️ Testez l'ajout d'un nouveau comic
+
+✅ PRÊT POUR DÉPLOIEMENT !

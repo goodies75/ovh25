@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Upload Direct</title>
+</head>
+<body>
+    <h1>Test Upload Direct</h1>
+    
+    <form method="POST" action="upload-image.php" enctype="multipart/form-data" target="response-frame">
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit">Upload Direct</button>
+    </form>
+    
+    <h2>Réponse de upload-image.php :</h2>
+    <iframe name="response-frame" style="width: 100%; height: 300px; border: 1px solid #ccc;"></iframe>
+    
+    <h2>Test via JavaScript (comme React) :</h2>
+    <input type="file" id="jsFile" accept="image/*">
+    <button onclick="testJS()">Test JS</button>
+    
+    <div id="jsResult" style="background: #f0f0f0; padding: 10px; margin: 10px 0; min-height: 50px;"></div>
+    
+    <script>
+    function testJS() {
+        const file = document.getElementById('jsFile').files[0];
+        if (!file) {
+            alert('Sélectionnez un fichier');
+            return;
+        }
+        
+        const formData = new FormData();
+        formData.append('image', file);
+        
+        document.getElementById('jsResult').innerHTML = 'Upload en cours...';
+        
+        fetch('upload-image.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            console.log('Status:', response.status);
+            console.log('Headers:', response.headers);
+            return response.text(); // Récupérer comme texte d'abord
+        })
+        .then(text => {
+            console.log('Raw response:', text);
+            document.getElementById('jsResult').innerHTML = `
+                <h3>Réponse brute :</h3>
+                <pre>${text}</pre>
+                <h3>Tentative de parse JSON :</h3>
+            `;
+            
+            try {
+                const json = JSON.parse(text);
+                document.getElementById('jsResult').innerHTML += `<pre style="color: green;">${JSON.stringify(json, null, 2)}</pre>`;
+            } catch (e) {
+                document.getElementById('jsResult').innerHTML += `<pre style="color: red;">Erreur JSON: ${e.message}</pre>`;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('jsResult').innerHTML = `<div style="color: red;">Erreur: ${error.message}</div>`;
+        });
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+# Fichiers de données à ne pas écraser lors du déploiement
+data/
+uploads/
+
+# Fichiers temporaires
+test.php
+*.tmp
+*.log

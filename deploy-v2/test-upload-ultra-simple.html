@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Test Upload Ultra Simple</title>
+</head>
+
+<body>
+  <h1>🔬 Test Upload Basique</h1>
+
+  <div style="margin: 20px; padding: 20px; border: 1px solid #ccc;">
+    <h3>Test 1: Sélection de fichier</h3>
+    <input type="file" id="fileInput" accept="image/*" onchange="testFileSelection()">
+    <div id="fileInfo"></div>
+  </div>
+
+  <div style="margin: 20px; padding: 20px; border: 1px solid #ccc;">
+    <h3>Test 2: Upload vers API</h3>
+    <button onclick="testDirectUpload()" id="uploadBtn" disabled>Test Upload Direct</button>
+    <div id="uploadResult"></div>
+  </div>
+
+  <div style="margin: 20px; padding: 20px; border: 1px solid #ccc;">
+    <h3>Test 3: API Disponible</h3>
+    <button onclick="testAPIAvailability()">Tester API Upload</button>
+    <div id="apiResult"></div>
+  </div>
+
+  <script>
+    let selectedFile = null;
+
+    function testFileSelection() {
+      const fileInput = document.getElementById('fileInput');
+      const file = fileInput.files[0];
+
+      if (file) {
+        selectedFile = file;
+        document.getElementById('fileInfo').innerHTML = `
+                    ✅ Fichier sélectionné:<br>
+                    - Nom: ${file.name}<br>
+                    - Taille: ${file.size} bytes<br>
+                    - Type: ${file.type}
+                `;
+        document.getElementById('uploadBtn').disabled = false;
+      } else {
+        document.getElementById('fileInfo').innerHTML = '❌ Aucun fichier sélectionné';
+        document.getElementById('uploadBtn').disabled = true;
+      }
+    }
+
+    function testDirectUpload() {
+      if (!selectedFile) {
+        document.getElementById('uploadResult').innerHTML = '❌ Aucun fichier sélectionné';
+        return;
+      }
+
+      document.getElementById('uploadResult').innerHTML = '⏳ Upload en cours...';
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const base64 = e.target.result;
+
+        const data = {
+          imageData: base64,
+          filename: selectedFile.name
+        };
+
+        console.log('🚀 Envoi vers API:', {
+          filename: selectedFile.name,
+          dataSize: base64.length
+        });
+
+        fetch('./upload-image.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        })
+          .then(response => {
+            console.log('📡 Réponse HTTP:', response.status);
+            return response.text();
+          })
+          .then(responseText => {
+            console.log('📋 Réponse brute:', responseText);
+
+            try {
+              const jsonResponse = JSON.parse(responseText);
+              if (jsonResponse.success) {
+                document.getElementById('uploadResult').innerHTML = `
+                                ✅ Upload réussi!<br>
+                                URL: ${jsonResponse.images?.medium?.url || jsonResponse.url || 'N/A'}
+                            `;
+              } else {
+                document.getElementById('uploadResult').innerHTML = `
+                                ❌ Erreur: ${jsonResponse.error}<br>
+                                Debug: <pre>${JSON.stringify(jsonResponse.debug || {}, null, 2)}</pre>
+                            `;
+              }
+            } catch (e) {
+              document.getElementById('uploadResult').innerHTML = `
+                            ❌ Réponse invalide: ${responseText}
+                        `;
+            }
+          })
+          .catch(error => {
+            console.error('💥 Erreur:', error);
+            document.getElementById('uploadResult').innerHTML = `❌ Erreur réseau: ${error}`;
+          });
+      };
+
+      reader.readAsDataURL(selectedFile);
+    }
+
+    function testAPIAvailability() {
+      document.getElementById('apiResult').innerHTML = '⏳ Test de l\'API...';
+
+      fetch('./upload-image.php', {
+        method: 'OPTIONS'
+      })
+        .then(response => {
+          document.getElementById('apiResult').innerHTML = `
+                    ✅ API disponible<br>
+                    Status: ${response.status}<br>
+                    Headers: ${JSON.stringify([...response.headers.entries()])}
+                `;
+        })
+        .catch(error => {
+          document.getElementById('apiResult').innerHTML = `❌ API non disponible: ${error}`;
+        });
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,8 @@
+# ATTENTION - PROTECTION ANTI-ECRASEMENT
+# 
+# Ce deploiement ne contient PAS le fichier fiches.json
+# pour proteger vos donnees existantes sur le serveur.
+# 
+# Vos comics sont preserves automatiquement !
+# 
+# Date: 2025-08-11 16:16:37

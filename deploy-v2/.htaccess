@@ -1,0 +1,8 @@
+# Configuration des types MIME pour les fichiers JavaScript et CSS
+AddType application/javascript .js
+AddType text/css .css
+AddType application/json .json
+
+# Configuration React Router - doit être en dernier
+FallbackResource /index.html
+

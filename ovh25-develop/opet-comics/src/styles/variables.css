@@ -1,0 +1,77 @@
+/* Variables globales pour les couleurs */
+:root {
+  /* Couleurs principales */
+  --color-primary-start: #667eea;
+  --color-primary-end: #764ba2;
+  --color-primary-gradient: linear-gradient(135deg, var(--color-primary-start) 0%, var(--color-primary-end) 100%);
+  
+  /* Couleurs secondaires */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-dark: #1a1a1a;
+  --color-light-gray: #f9f9f9;
+  
+  /* Couleurs de texte */
+  --color-text-primary: #333333;
+  --color-text-secondary: #666666;
+  --color-text-muted: #999999;
+  --color-text-light: #ffffff;
+  
+  /* Couleurs de bordure */
+  --color-border-light: #e1e5e9;
+  --color-border-focus: #667eea;
+  --color-border-error: #fcc;
+  
+  /* Couleurs de fond */
+  --color-bg-main: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --color-bg-card: #ffffff;
+  --color-bg-overlay: rgba(255, 255, 255, 0.1);
+  
+  /* Couleurs d'état */
+  --color-success: #28a745;
+  --color-error: #dc3545;
+  --color-error-bg: #fee;
+  --color-error-text: #c33;
+  --color-warning: #ffc107;
+  --color-info: #17a2b8;
+  
+  /* Couleurs de boutons */
+  --color-btn-primary: var(--color-primary-gradient);
+  --color-btn-danger: #dc3545;
+  --color-btn-danger-hover: #c82333;
+  --color-btn-cancel: #6c757d;
+  --color-btn-cancel-hover: #5a6268;
+  
+  /* Ombres */
+  --shadow-light: 0 10px 30px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 20px 40px rgba(0, 0, 0, 0.15);
+  --shadow-dark: 0 5px 15px rgba(0, 0, 0, 0.2);
+  
+  /* Rayons de bordure */
+  --border-radius-sm: 8px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 15px;
+  
+  /* Espacements */
+  --spacing-xs: 5px;
+  --spacing-sm: 10px;
+  --spacing-md: 15px;
+  --spacing-lg: 20px;
+  --spacing-xl: 30px;
+  --spacing-xxl: 40px;
+  
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* Variables pour le mode sombre (optionnel) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg-card: #2d2d2d;
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #cccccc;
+    --color-border-light: #444444;
+  }
+}
