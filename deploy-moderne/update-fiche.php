@@ -30,14 +30,9 @@ try {
     
     $id = intval($data['id']);
     
-    // Connexion à la base de données
-    $host = 'localhost';
-    $dbname = 'o-petit_comics';
-    $username = 'o-petit_comics';
-    $password = 'UQv4F2wvQSCA3wnG';
-    
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // Charger la configuration de la BDD
+    require_once 'db-config.php';
+    $pdo = getDbConnection();
     
     // Préparer les données pour la mise à jour
     $updateData = [];

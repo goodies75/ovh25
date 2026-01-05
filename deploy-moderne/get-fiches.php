@@ -1,4 +1,9 @@
 <?php
+/**
+ * API : Récupérer toutes les fiches comics depuis MySQL
+ * Méthode: GET
+ */
+
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, OPTIONS');
@@ -16,45 +21,41 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     exit;
 }
 
-// Fichier pour stocker les fiches
-$fichesFile = __DIR__ . '/fiches-data.json';
+try {
+    // Charger la configuration de la BDD
+    require_once 'db-config.php';
+    $pdo = getDbConnection();
 
-// Vérifier si le fichier existe
-if (!file_exists($fichesFile)) {
-    // Créer des données par défaut si le fichier n'existe pas
-    $defaultFiches = [
-        [
-            'id' => 1722787200000,
-            'titre' => 'Spider-Man: Into the Spider-Verse',
-            'description' => 'Une aventure révolutionnaire dans le multivers avec Miles Morales',
-            'image_url' => 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=400&fit=crop',
-            'created_at' => '2024-08-04T12:00:00+00:00'
-        ],
-        [
-            'id' => 1722873600000,
-            'titre' => 'Batman: The Dark Knight Returns',
-            'description' => 'Le retour épique de Batman dans une Gotham dystopique',
-            'image_url' => 'https://images.unsplash.com/photo-1543832923-44667a44c804?w=300&h=400&fit=crop',
-            'created_at' => '2024-08-05T12:00:00+00:00'
-        ]
-    ];
-    file_put_contents($fichesFile, json_encode($defaultFiches, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-    echo json_encode($defaultFiches);
-    exit;
+    // Récupérer toutes les fiches triées par date de création (plus récent en premier)
+    $sql = "SELECT
+        id, nom_serie, titre, numero, annee, numero_edition, editeur,
+        auteur_couverture, autres_auteurs, titre_secondaire, etat,
+        isbn, description, image_url, created_at
+    FROM fiches
+    ORDER BY created_at DESC";
+
+    $stmt = $pdo->query($sql);
+    $fiches = $stmt->fetchAll();
+
+    // Convertir autres_auteurs de JSON string vers array
+    foreach ($fiches as &$fiche) {
+        if (isset($fiche['autres_auteurs']) && is_string($fiche['autres_auteurs'])) {
+            $decoded = json_decode($fiche['autres_auteurs'], true);
+            $fiche['autres_auteurs'] = $decoded ?: [];
+        }
+
+        // Convertir l'id en entier
+        $fiche['id'] = (int) $fiche['id'];
+    }
+
+    echo json_encode($fiches);
+
+} catch (PDOException $e) {
+    error_log("Erreur get-fiches.php: " . $e->getMessage());
+    http_response_code(500);
+    echo json_encode([
+        'error' => 'Erreur lors de la récupération des fiches',
+        'message' => $e->getMessage()
+    ]);
 }
-
-// Lire les fiches existantes
-$fiches = json_decode(file_get_contents($fichesFile), true);
-
-if (!$fiches) {
-    echo json_encode([]);
-    exit;
-}
-
-// Trier par date de création (plus récent en premier)
-usort($fiches, function($a, $b) {
-    return strtotime($b['created_at']) - strtotime($a['created_at']);
-});
-
-echo json_encode($fiches);
 ?>

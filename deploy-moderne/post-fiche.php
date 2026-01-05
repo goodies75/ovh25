@@ -1,4 +1,9 @@
 <?php
+/**
+ * API : Ajouter une nouvelle fiche comic dans MySQL
+ * Méthode: POST
+ */
+
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
@@ -33,46 +38,70 @@ if (empty($data['nom_serie'])) {
     exit;
 }
 
-// Fichier pour stocker les fiches
-$fichesFile = __DIR__ . '/fiches-data.json';
-$fiches = [];
+try {
+    // Charger la configuration de la BDD
+    require_once 'db-config.php';
+    $pdo = getDbConnection();
 
-// Lire les fiches existantes
-if (file_exists($fichesFile)) {
-    $existingData = file_get_contents($fichesFile);
-    $fiches = json_decode($existingData, true) ?: [];
-}
+    // Préparer les données pour l'insertion
+    $sql = "INSERT INTO fiches (
+        nom_serie, titre, numero, annee, numero_edition, editeur,
+        auteur_couverture, autres_auteurs, titre_secondaire, etat,
+        isbn, description, image_url
+    ) VALUES (
+        :nom_serie, :titre, :numero, :annee, :numero_edition, :editeur,
+        :auteur_couverture, :autres_auteurs, :titre_secondaire, :etat,
+        :isbn, :description, :image_url
+    )";
 
-// Créer la nouvelle fiche avec tous les champs
-$newFiche = [
-    'id' => time() * 1000 + rand(0, 999),
-    'nom_serie' => trim($data['nom_serie']),
-    'numero' => isset($data['numero']) ? trim($data['numero']) : '',
-    'annee' => isset($data['annee']) ? trim($data['annee']) : '',
-    'numero_edition' => isset($data['numero_edition']) ? trim($data['numero_edition']) : '',
-    'editeur' => isset($data['editeur']) ? trim($data['editeur']) : '',
-    'auteur_couverture' => isset($data['auteur_couverture']) ? trim($data['auteur_couverture']) : '',
-    'autres_auteurs' => isset($data['autres_auteurs']) && is_array($data['autres_auteurs']) ? $data['autres_auteurs'] : [],
-    'titre_secondaire' => isset($data['titre_secondaire']) ? trim($data['titre_secondaire']) : '',
-    'etat' => isset($data['etat']) ? trim($data['etat']) : 'Très bon',
-    'isbn' => isset($data['isbn']) ? trim($data['isbn']) : '',
-    'description' => isset($data['description']) ? trim($data['description']) : '',
-    'image_url' => isset($data['image_url']) ? trim($data['image_url']) : '',
-    'created_at' => date('c') // Format ISO 8601
-];
+    $stmt = $pdo->prepare($sql);
 
-// Ajouter la nouvelle fiche
-$fiches[] = $newFiche;
+    // Préparer les paramètres
+    $params = [
+        ':nom_serie' => trim($data['nom_serie']),
+        ':titre' => isset($data['titre']) ? trim($data['titre']) : trim($data['nom_serie']),
+        ':numero' => isset($data['numero']) ? trim($data['numero']) : '',
+        ':annee' => isset($data['annee']) ? trim($data['annee']) : '',
+        ':numero_edition' => isset($data['numero_edition']) ? trim($data['numero_edition']) : '',
+        ':editeur' => isset($data['editeur']) ? trim($data['editeur']) : '',
+        ':auteur_couverture' => isset($data['auteur_couverture']) ? trim($data['auteur_couverture']) : '',
+        ':autres_auteurs' => isset($data['autres_auteurs']) && is_array($data['autres_auteurs'])
+            ? json_encode($data['autres_auteurs'], JSON_UNESCAPED_UNICODE)
+            : '[]',
+        ':titre_secondaire' => isset($data['titre_secondaire']) ? trim($data['titre_secondaire']) : '',
+        ':etat' => isset($data['etat']) ? trim($data['etat']) : 'Très bon',
+        ':isbn' => isset($data['isbn']) ? trim($data['isbn']) : '',
+        ':description' => isset($data['description']) ? trim($data['description']) : '',
+        ':image_url' => isset($data['image_url']) ? trim($data['image_url']) : '',
+    ];
 
-// Sauvegarder
-if (file_put_contents($fichesFile, json_encode($fiches, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE))) {
+    $stmt->execute($params);
+
+    // Récupérer l'ID de la nouvelle fiche
+    $newId = $pdo->lastInsertId();
+
+    // Récupérer la fiche complète avec created_at
+    $selectStmt = $pdo->prepare("SELECT * FROM fiches WHERE id = :id");
+    $selectStmt->execute([':id' => $newId]);
+    $newFiche = $selectStmt->fetch();
+
+    // Décoder autres_auteurs pour le retour JSON
+    if (isset($newFiche['autres_auteurs']) && is_string($newFiche['autres_auteurs'])) {
+        $newFiche['autres_auteurs'] = json_decode($newFiche['autres_auteurs'], true) ?: [];
+    }
+
     echo json_encode([
         'success' => true,
         'message' => 'Comic ajouté avec succès',
         'data' => $newFiche
     ]);
-} else {
+
+} catch (PDOException $e) {
+    error_log("Erreur post-fiche.php: " . $e->getMessage());
     http_response_code(500);
-    echo json_encode(['error' => 'Erreur lors de la sauvegarde']);
+    echo json_encode([
+        'error' => 'Erreur lors de la sauvegarde',
+        'message' => $e->getMessage()
+    ]);
 }
 ?>

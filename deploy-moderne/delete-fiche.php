@@ -1,4 +1,9 @@
 <?php
+/**
+ * API : Supprimer une fiche comic de MySQL
+ * Méthode: DELETE
+ */
+
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: DELETE, OPTIONS');
@@ -38,54 +43,48 @@ if (!$id) {
 }
 
 try {
-    $fichier = 'fiches-data.json';
-    
-    // Charger les données existantes
-    $fiches = [];
-    if (file_exists($fichier)) {
-        $data = file_get_contents($fichier);
-        $fiches = json_decode($data, true) ?: [];
-    }
-    
-    // Chercher et supprimer la fiche
-    $ficheFound = false;
-    $ficheSuppressee = null;
-    
-    foreach ($fiches as $key => $fiche) {
-        if ($fiche['id'] == $id) {
-            $ficheSuppressee = $fiche;
-            unset($fiches[$key]);
-            $ficheFound = true;
-            break;
-        }
-    }
-    
-    if (!$ficheFound) {
+    // Charger la configuration de la BDD
+    require_once 'db-config.php';
+    $pdo = getDbConnection();
+
+    // Récupérer la fiche avant suppression (pour le retourner)
+    $selectStmt = $pdo->prepare("SELECT * FROM fiches WHERE id = :id");
+    $selectStmt->execute([':id' => $id]);
+    $ficheSuppressee = $selectStmt->fetch();
+
+    if (!$ficheSuppressee) {
         http_response_code(404);
         echo json_encode(['error' => 'Fiche non trouvée']);
         exit();
     }
-    
-    // Réindexer le tableau
-    $fiches = array_values($fiches);
-    
-    // Sauvegarder les données mises à jour
-    $result = file_put_contents($fichier, json_encode($fiches, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-    
-    if ($result === false) {
-        throw new Exception('Erreur lors de la sauvegarde');
+
+    // Décoder autres_auteurs pour le retour JSON
+    if (isset($ficheSuppressee['autres_auteurs']) && is_string($ficheSuppressee['autres_auteurs'])) {
+        $ficheSuppressee['autres_auteurs'] = json_decode($ficheSuppressee['autres_auteurs'], true) ?: [];
     }
-    
+
+    // Supprimer la fiche
+    $deleteStmt = $pdo->prepare("DELETE FROM fiches WHERE id = :id");
+    $deleteStmt->execute([':id' => $id]);
+
+    // Compter les fiches restantes
+    $countStmt = $pdo->query("SELECT COUNT(*) as count FROM fiches");
+    $remainingCount = $countStmt->fetch()['count'];
+
     // Réponse de succès
     echo json_encode([
         'success' => true,
         'message' => 'Fiche supprimée avec succès',
         'deleted_fiche' => $ficheSuppressee,
-        'remaining_count' => count($fiches)
+        'remaining_count' => $remainingCount
     ]);
-    
-} catch (Exception $e) {
+
+} catch (PDOException $e) {
+    error_log("Erreur delete-fiche.php: " . $e->getMessage());
     http_response_code(500);
-    echo json_encode(['error' => 'Erreur serveur: ' . $e->getMessage()]);
+    echo json_encode([
+        'error' => 'Erreur serveur',
+        'message' => $e->getMessage()
+    ]);
 }
 ?>
