@@ -17,7 +17,7 @@ export default function Button({
   ...props
 }: ButtonProps) {
 
-  const baseClasses = 'font-medium rounded-xl transition-all duration-300 transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg hover:shadow-xl';
+  const baseClasses = 'font-medium rounded-lg transition-all duration-300 transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg hover:shadow-xl';
 
   const variantClasses = {
     primary: 'bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white shadow-primary-500/30 hover:shadow-primary-500/50',

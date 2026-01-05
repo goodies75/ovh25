@@ -148,6 +148,15 @@ export default {
       backgroundSize: {
         '200%': '200% 200%',
       },
+      borderRadius: {
+        // Réduction des radius (moins arrondis comme demandé)
+        'sm': '0.25rem',   // 4px au lieu de 8px
+        DEFAULT: '0.375rem', // 6px
+        'md': '0.5rem',    // 8px au lieu de 12px
+        'lg': '0.625rem',  // 10px au lieu de 16px
+        'xl': '0.75rem',   // 12px au lieu de 20px
+        '2xl': '0.875rem', // 14px au lieu de 24px
+      },
     },
   },
   plugins: [],
