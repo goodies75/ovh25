@@ -5,7 +5,7 @@ header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
 // Configuration de sécurité
-define('ADMIN_PIN_HASH', '$2y$10$kVf8gybHnjifwWKIuDe2VudTB9JOZZTu.IHQ/A/Rg9EvSIQY6nvWG'); // Remplacez par votre hash
+define('ADMIN_PIN_HASH', '$2y$12$LSSwQNW/47S7L6iLqiti8e.ZUKb1vVio2PjsMKXYc4rYueGx.Eqoe'); // Hash pour @0149@
 define('MAX_ATTEMPTS', 5);
 define('LOCKOUT_TIME', 300); // 5 minutes en secondes
 
