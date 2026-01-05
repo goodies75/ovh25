@@ -4,10 +4,10 @@
  * Credentials OVH
  */
 
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'o-petit_comics');
-define('DB_USER', 'o-petit_comics');
-define('DB_PASS', 'UQv4F2wvQSCA3wnG');
+define('DB_HOST', 'opetitcorqreact.mysql.db');
+define('DB_NAME', 'opetitcorqreact');
+define('DB_USER', 'opetitcorqreact');
+define('DB_PASS', 'Lapin0tOVH');
 define('DB_CHARSET', 'utf8mb4');
 
 /**
