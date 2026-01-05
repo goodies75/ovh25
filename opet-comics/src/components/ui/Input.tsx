@@ -1,58 +1,50 @@
-import { InputHTMLAttributes } from 'react';
+import './Input.css';
 
-interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
+interface InputProps {
   label?: string;
+  type?: 'text' | 'email' | 'password' | 'number' | 'url';
   value: string;
   onChange: (value: string) => void;
+  placeholder?: string;
+  required?: boolean;
+  className?: string;
   error?: string;
+  disabled?: boolean;
 }
 
 export default function Input({
   label,
+  type = 'text',
   value,
   onChange,
-  error,
+  placeholder,
   required = false,
   className = '',
-  disabled = false,
-  ...props
+  error,
+  disabled = false
 }: InputProps) {
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value);
   };
 
   return (
-    <div className={`space-y-2 ${className}`}>
+    <div className={`input-group ${className}`}>
       {label && (
-        <label className="block text-sm font-semibold text-dark-700">
+        <label className="input-label">
           {label}
-          {required && <span className="text-danger-500 ml-1">*</span>}
+          {required && <span className="input-required">*</span>}
         </label>
       )}
       <input
+        type={type}
         value={value}
         onChange={handleChange}
+        placeholder={placeholder}
         required={required}
         disabled={disabled}
-        className={`
-          w-full px-4 py-3 rounded-xl
-          border-2 transition-all duration-300
-          bg-white
-          focus:outline-none focus:ring-2 focus:ring-offset-2
-          disabled:opacity-50 disabled:cursor-not-allowed
-          ${error
-            ? 'border-danger-300 focus:border-danger-500 focus:ring-danger-500/20'
-            : 'border-dark-200 focus:border-primary-500 focus:ring-primary-500/20 hover:border-dark-300'
-          }
-        `}
-        {...props}
+        className={`input ${error ? 'input--error' : ''}`}
       />
-      {error && (
-        <p className="text-sm text-danger-600 font-medium animate-slide-down">
-          {error}
-        </p>
-      )}
+      {error && <span className="input-error">{error}</span>}
     </div>
   );
 }
