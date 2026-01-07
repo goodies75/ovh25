@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Modal from './Modal/Modal';
 import { Button, Input, Textarea, Select } from './ui';
+import ImageUpload from './ImageUpload/ImageUpload';
 import './ComicEditModal.css';
 
 interface ComicEditModalProps {
@@ -173,10 +174,10 @@ export default function ComicEditModal({ isOpen, onClose, fiche, onSave }: Comic
             />
           </div>
 
-          <Input
-            label="URL de l'image"
-            value={editedFiche?.image_url || ''}
-            onChange={(value) => setEditedFiche({...editedFiche, image_url: value})}
+          <ImageUpload
+            label="📷 Image de couverture"
+            currentImageUrl={editedFiche?.image_url || ''}
+            onImageChange={(url) => setEditedFiche({...editedFiche, image_url: url})}
           />
 
           <Textarea

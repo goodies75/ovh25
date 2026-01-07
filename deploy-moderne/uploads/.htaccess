@@ -1,0 +1,12 @@
+# Protection du dossier uploads
+Options -Indexes
+
+# Autoriser seulement les images
+<FilesMatch "\.(jpg|jpeg|png|gif|webp)$">
+    Allow from all
+</FilesMatch>
+
+# Bloquer tous les autres fichiers
+<FilesMatch "^(?!.*\.(jpg|jpeg|png|gif|webp)$).*$">
+    Deny from all
+</FilesMatch>

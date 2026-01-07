@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button, Card, Input } from "./ui";
+import ImageUpload from './ImageUpload/ImageUpload';
 
 interface Fiche {
   nom_serie: string;
@@ -224,14 +225,11 @@ export default function FicheForm() {
             </div>
           </div>
 
-          <div className="form-group">
-            <input
-              className="form-input"
-              placeholder="URL de l'image"
-              value={fiche.image_url}
-              onChange={(e) => setFiche({ ...fiche, image_url: e.target.value })}
-            />
-          </div>
+          <ImageUpload
+            label="📷 Image de couverture"
+            currentImageUrl={fiche.image_url}
+            onImageChange={(url) => setFiche({ ...fiche, image_url: url })}
+          />
 
           <div className="form-group">
             <textarea
