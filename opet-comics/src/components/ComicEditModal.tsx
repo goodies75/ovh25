@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { BookOpen, PenTool, Plus, X, FileText } from 'lucide-react';
 import Modal from './Modal/Modal';
 import { Button, Input, Textarea, Select } from './ui';
 import ImageUpload from './ImageUpload/ImageUpload';
@@ -64,10 +65,13 @@ export default function ComicEditModal({ isOpen, onClose, fiche, onSave }: Comic
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Modifier le Comic" variant="light">
       <div className="edit-form">
-        
+
         {/* Section principale */}
         <div className="form-section">
-          <h3>📖 Informations principales</h3>
+          <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <BookOpen size={22} />
+            <span>Informations principales</span>
+          </h3>
           
           <div className="form-row">
             <Input
@@ -111,7 +115,10 @@ export default function ComicEditModal({ isOpen, onClose, fiche, onSave }: Comic
 
         {/* Section auteurs */}
         <div className="form-section">
-          <h3>✍️ Auteurs</h3>
+          <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <PenTool size={22} />
+            <span>Auteurs</span>
+          </h3>
           
           <Input
             label="Auteur de la couverture"
@@ -128,12 +135,12 @@ export default function ComicEditModal({ isOpen, onClose, fiche, onSave }: Comic
                 onChange={setNouvelAuteur}
                 placeholder="Nom de l'auteur"
               />
-              <Button 
-                type="button" 
+              <Button
+                type="button"
                 onClick={ajouterAuteur}
                 className="btn-add-author"
               >
-                ➕
+                <Plus size={18} />
               </Button>
             </div>
             
@@ -142,12 +149,12 @@ export default function ComicEditModal({ isOpen, onClose, fiche, onSave }: Comic
                 {editedFiche.autres_auteurs.map((auteur: string, index: number) => (
                   <span key={index} className="auteur-tag">
                     {auteur}
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       onClick={() => supprimerAuteur(index)}
                       className="btn-remove-author"
                     >
-                      ❌
+                      <X size={14} />
                     </button>
                   </span>
                 ))}
@@ -158,7 +165,10 @@ export default function ComicEditModal({ isOpen, onClose, fiche, onSave }: Comic
 
         {/* Section détails */}
         <div className="form-section">
-          <h3>📋 Détails</h3>
+          <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <FileText size={22} />
+            <span>Détails</span>
+          </h3>
           
           <div className="form-row">
             <Select
@@ -175,7 +185,7 @@ export default function ComicEditModal({ isOpen, onClose, fiche, onSave }: Comic
           </div>
 
           <ImageUpload
-            label="📷 Image de couverture"
+            label="Image de couverture"
             currentImageUrl={editedFiche?.image_url || ''}
             onImageChange={(url) => setEditedFiche({...editedFiche, image_url: url})}
           />

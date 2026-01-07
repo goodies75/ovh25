@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Lock, AlertTriangle, Lightbulb } from 'lucide-react';
 import { Button, Input } from '../ui';
 import Modal from '../Modal/Modal';
 import './PinProtection.css';
@@ -84,8 +85,9 @@ export default function PinProtection({
         <div className="pin-protection-info">
           <p><strong>Action :</strong> {action}</p>
           {comicTitle && <p><strong>Comic :</strong> {comicTitle}</p>}
-          <p className="security-notice">
-            🔒 Cette action nécessite une autorisation administrateur
+          <p className="security-notice" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <Lock size={16} />
+            <span>Cette action nécessite une autorisation administrateur</span>
           </p>
         </div>
 
@@ -103,8 +105,9 @@ export default function PinProtection({
         </div>
 
         {error && (
-          <div className="error-message">
-            ⚠️ {error}
+          <div className="error-message" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <AlertTriangle size={16} />
+            <span>{error}</span>
           </div>
         )}
 
@@ -126,8 +129,9 @@ export default function PinProtection({
         </div>
 
         <div className="security-info">
-          <small>
-            💡 L'autorisation sera valide pendant 30 minutes
+          <small style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <Lightbulb size={14} />
+            <span>L'autorisation sera valide pendant 30 minutes</span>
           </small>
         </div>
       </div>

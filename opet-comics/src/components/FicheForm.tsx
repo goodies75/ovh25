@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Plus, BookOpen, PenTool, X, FileText, Library } from 'lucide-react';
 import { Button, Card, Input } from "./ui";
 import ImageUpload from './ImageUpload/ImageUpload';
 
@@ -95,12 +96,18 @@ export default function FicheForm() {
 
   return (
     <Card className="form-container">
-      <h2>📚 Ajouter un Comic</h2>
+      <h2 style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <Library size={28} />
+        <span>Ajouter un Comic</span>
+      </h2>
       <form onSubmit={handleSubmit} className="comic-form">
 
         {/* Section principale */}
         <div className="form-section">
-          <h3>📖 Informations principales</h3>
+          <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <BookOpen size={22} />
+            <span>Informations principales</span>
+          </h3>
 
           <div className="form-row">
             <Input
@@ -155,7 +162,10 @@ export default function FicheForm() {
 
         {/* Section auteurs */}
         <div className="form-section">
-          <h3>✍️ Auteurs</h3>
+          <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <PenTool size={22} />
+            <span>Auteurs</span>
+          </h3>
 
           <div className="form-group">
             <input
@@ -176,7 +186,7 @@ export default function FicheForm() {
                 onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), ajouterAuteur())}
               />
               <button type="button" onClick={ajouterAuteur} className="btn-add-author">
-                ➕
+                <Plus size={18} />
               </button>
             </div>
 
@@ -190,7 +200,7 @@ export default function FicheForm() {
                       onClick={() => supprimerAuteur(index)}
                       className="btn-remove-author"
                     >
-                      ❌
+                      <X size={14} />
                     </button>
                   </span>
                 ))}
@@ -201,7 +211,10 @@ export default function FicheForm() {
 
         {/* Section détails */}
         <div className="form-section">
-          <h3>📋 Détails</h3>
+          <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <FileText size={22} />
+            <span>Détails</span>
+          </h3>
 
           <div className="form-row">
             <div className="form-group">
@@ -226,7 +239,7 @@ export default function FicheForm() {
           </div>
 
           <ImageUpload
-            label="📷 Image de couverture"
+            label="Image de couverture"
             currentImageUrl={fiche.image_url}
             onImageChange={(url) => setFiche({ ...fiche, image_url: url })}
           />
@@ -243,7 +256,8 @@ export default function FicheForm() {
         </div>
 
         <Button type="submit" className="btn--full-width">
-          ➕ Ajouter le Comic
+          <Plus size={20} />
+          <span>Ajouter le Comic</span>
         </Button>
       </form>
     </Card>

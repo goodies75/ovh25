@@ -1,3 +1,4 @@
+import { Building2, Calendar, Library } from 'lucide-react';
 import { Card } from './ui';
 import './ComicCompactCard.css';
 
@@ -35,13 +36,17 @@ export default function ComicCompactCard({ fiche, onClick }: ComicCompactCardPro
         <div className="compact-details">
           {editeur && (
             <div className="compact-publisher">
-              <span className="compact-icon">🏢</span>
+              <span className="compact-icon">
+                <Building2 size={14} />
+              </span>
               <span className="compact-text">{editeur}</span>
             </div>
           )}
           {annee && (
             <div className="compact-year">
-              <span className="compact-icon">📅</span>
+              <span className="compact-icon">
+                <Calendar size={14} />
+              </span>
               <span className="compact-text">{annee}</span>
             </div>
           )}
@@ -69,7 +74,9 @@ export default function ComicCompactCard({ fiche, onClick }: ComicCompactCardPro
           />
         ) : null}
         <div className="compact-placeholder" style={{ display: imageUrl ? 'none' : 'flex' }}>
-          <span className="compact-placeholder-icon">📚</span>
+          <span className="compact-placeholder-icon">
+            <Library size={32} />
+          </span>
         </div>
       </div>
 

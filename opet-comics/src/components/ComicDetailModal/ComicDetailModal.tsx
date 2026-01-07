@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Edit, Trash2, Building2, Calendar, Bookmark, Star, BookOpen, Palette, PenTool, FileText, Library } from 'lucide-react';
 import { Button } from '../ui';
 import Modal from '../Modal/Modal';
 import './ComicDetailModal.css';
@@ -67,10 +68,16 @@ export default function ComicDetailModal({
         actions={
           <div className="modal-actions-group">
             <Button onClick={handleEditClick} className="btn-edit">
-              ✏️ Modifier
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <Edit size={18} />
+                <span>Modifier</span>
+              </div>
             </Button>
             <Button variant="danger" onClick={handleDeleteClick} className="btn-delete">
-              🗑️ Supprimer
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <Trash2 size={18} />
+                <span>Supprimer</span>
+              </div>
             </Button>
           </div>
         }
@@ -84,44 +91,65 @@ export default function ComicDetailModal({
               
               <div className="detail-grid">
                 <div className="detail-item">
-                  <span className="detail-label">📚 Éditeur :</span>
+                  <span className="detail-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Building2 size={16} />
+                    <span>Éditeur :</span>
+                  </span>
                   <span className="detail-value">{fiche.editeur || 'Non renseigné'}</span>
                 </div>
-                
+
                 <div className="detail-item">
-                  <span className="detail-label">📅 Année :</span>
+                  <span className="detail-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Calendar size={16} />
+                    <span>Année :</span>
+                  </span>
                   <span className="detail-value">{fiche.annee || 'Non renseignée'}</span>
                 </div>
-                
+
                 {fiche.numero_edition && (
                   <div className="detail-item">
-                    <span className="detail-label">🔖 Édition :</span>
+                    <span className="detail-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Bookmark size={16} />
+                      <span>Édition :</span>
+                    </span>
                     <span className="detail-value">#{fiche.numero_edition}</span>
                   </div>
                 )}
-                
+
                 <div className="detail-item">
-                  <span className="detail-label">⭐ État :</span>
+                  <span className="detail-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Star size={16} />
+                    <span>État :</span>
+                  </span>
                   <span className="detail-value">{fiche.etat}</span>
                 </div>
-                
+
                 {fiche.isbn && (
                   <div className="detail-item">
-                    <span className="detail-label">📖 ISBN :</span>
+                    <span className="detail-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <BookOpen size={16} />
+                      <span>ISBN :</span>
+                    </span>
                     <span className="detail-value">{fiche.isbn}</span>
                   </div>
                 )}
-                
+
                 {fiche.auteur_couverture && (
                   <div className="detail-item">
-                    <span className="detail-label">🎨 Couverture :</span>
+                    <span className="detail-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Palette size={16} />
+                      <span>Couverture :</span>
+                    </span>
                     <span className="detail-value">{fiche.auteur_couverture}</span>
                   </div>
                 )}
-                
+
                 {fiche.autres_auteurs && fiche.autres_auteurs.length > 0 && (
                   <div className="detail-item detail-item--full">
-                    <span className="detail-label">✍️ Autres auteurs :</span>
+                    <span className="detail-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <PenTool size={16} />
+                      <span>Autres auteurs :</span>
+                    </span>
                     <span className="detail-value">{fiche.autres_auteurs.join(', ')}</span>
                   </div>
                 )}
@@ -129,7 +157,10 @@ export default function ComicDetailModal({
               
               {fiche.description && (
                 <div className="detail-description">
-                  <span className="detail-label">📝 Description :</span>
+                  <span className="detail-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <FileText size={16} />
+                    <span>Description :</span>
+                  </span>
                   <p className="detail-description-text">{fiche.description}</p>
                 </div>
               )}
@@ -153,7 +184,9 @@ export default function ComicDetailModal({
                 />
               ) : (
                 <div className="detail-placeholder">
-                  <div className="placeholder-icon">📚</div>
+                  <div className="placeholder-icon">
+                    <Library size={48} />
+                  </div>
                   <div className="placeholder-text">Pas d'image</div>
                 </div>
               )}

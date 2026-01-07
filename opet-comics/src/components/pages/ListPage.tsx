@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Library, Search } from 'lucide-react';
 import { Button } from "../ui";
 import ComicCompactCard from '../ComicCompactCard';
 import '../ComicCompactCard.css';
@@ -283,20 +284,27 @@ export default function ListPage() {
   return (
     <div className="list-page">
       <div className="list-header">
-        <h2>📚 Collection de Comics</h2>
+        <h2 style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <Library size={28} />
+          <span>Collection de Comics</span>
+        </h2>
         <p>Explorez et gérez votre collection complète</p>
       </div>
 
       {/* Contrôles de tri et recherche */}
       <div className="list-controls">
         <div className="search-section">
-          <input
-            type="text"
-            placeholder="🔍 Rechercher par titre, éditeur, auteur..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="search-input"
-          />
+          <div style={{ position: 'relative', width: '100%' }}>
+            <Search size={20} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#9ca3af' }} />
+            <input
+              type="text"
+              placeholder="Rechercher par titre, éditeur, auteur..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="search-input"
+              style={{ paddingLeft: '40px' }}
+            />
+          </div>
         </div>
         
         <div className="sort-section">

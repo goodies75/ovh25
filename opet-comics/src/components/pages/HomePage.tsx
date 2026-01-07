@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Palette, Plus, BookOpen, BarChart3, Sparkles, Search, Smartphone, HardDrive } from 'lucide-react';
 import { Card } from '../ui';
 import './HomePage.css';
 
@@ -14,7 +15,10 @@ export default function HomePage({ statsData }: HomePageProps) {
     <div className="home-page">
       <div className="hero-section">
         <div className="hero-content">
-          <h2>🎨 Bienvenue dans Opet Comics</h2>
+          <h2 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px' }}>
+            <Palette size={32} />
+            <span>Bienvenue dans Opet Comics</span>
+          </h2>
           <p className="hero-description">
             Gérez votre collection de bandes dessinées et comics avec style.
             Ajoutez, organisez et consultez vos œuvres préférées en toute simplicité.
@@ -25,7 +29,7 @@ export default function HomePage({ statsData }: HomePageProps) {
       <div className="quick-actions">
         <Card className="action-card">
           <div className="action-content">
-            <div className="action-icon">➕</div>
+            <div className="action-icon"><Plus size={48} strokeWidth={2} /></div>
             <h3>Ajouter un Comic</h3>
             <p>Enrichissez votre collection en ajoutant de nouveaux comics avec toutes leurs informations détaillées.</p>
             <Link to="/add" className="btn btn--full-width">
@@ -36,7 +40,7 @@ export default function HomePage({ statsData }: HomePageProps) {
 
         <Card className="action-card">
           <div className="action-content">
-            <div className="action-icon">📚</div>
+            <div className="action-icon"><BookOpen size={48} strokeWidth={2} /></div>
             <h3>Consulter la Liste</h3>
             <p>Parcourez votre collection, triez par ordre alphabétique et gérez vos comics existants.</p>
             <Link to="/list" className="btn btn--full-width">
@@ -49,7 +53,10 @@ export default function HomePage({ statsData }: HomePageProps) {
       {statsData && (
         <div className="stats-section">
           <Card className="stats-card">
-            <h3>📊 Statistiques de votre collection</h3>
+            <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <BarChart3 size={24} />
+              <span>Statistiques de votre collection</span>
+            </h3>
             <div className="stats-grid">
               <div className="stat-item">
                 <span className="stat-number">{statsData.totalComics}</span>
@@ -67,25 +74,28 @@ export default function HomePage({ statsData }: HomePageProps) {
       )}
 
       <div className="features-section">
-        <h3>✨ Fonctionnalités</h3>
+        <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <Sparkles size={24} />
+          <span>Fonctionnalités</span>
+        </h3>
         <div className="features-grid">
           <div className="feature-item">
-            <span className="feature-icon">🎨</span>
+            <span className="feature-icon"><Palette size={32} /></span>
             <h4>Interface moderne</h4>
             <p>Design épuré et responsive pour tous vos appareils</p>
           </div>
           <div className="feature-item">
-            <span className="feature-icon">🔍</span>
+            <span className="feature-icon"><Search size={32} /></span>
             <h4>Tri intelligent</h4>
             <p>Organisez votre collection par ordre alphabétique</p>
           </div>
           <div className="feature-item">
-            <span className="feature-icon">📱</span>
+            <span className="feature-icon"><Smartphone size={32} /></span>
             <h4>Responsive</h4>
             <p>Utilisable sur mobile, tablette et ordinateur</p>
           </div>
           <div className="feature-item">
-            <span className="feature-icon">💾</span>
+            <span className="feature-icon"><HardDrive size={32} /></span>
             <h4>Sauvegarde automatique</h4>
             <p>Vos données sont automatiquement sauvegardées</p>
           </div>

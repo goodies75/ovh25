@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Library, Building2, Calendar, Bookmark, Palette, PenTool, Star, BookOpen } from 'lucide-react';
 import { Button, Card } from "./ui";
 import Modal from "./Modal/Modal";
 
@@ -118,7 +119,10 @@ export default function FicheList() {
 
   return (
     <div className="cards-container">
-      <h2>📚 Liste des Comics</h2>
+      <h2 style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <Library size={28} />
+        <span>Liste des Comics</span>
+      </h2>
 
       {loading && (
         <div className="loading">
@@ -165,21 +169,50 @@ export default function FicheList() {
                   )}
 
                   <div className="comic-details">
-                    {fiche.editeur && <p className="comic-editeur">📚 {fiche.editeur}</p>}
-                    {fiche.annee && <p className="comic-annee">📅 {fiche.annee}</p>}
-                    {fiche.numero_edition && <p className="comic-edition">🔖 Édition #{fiche.numero_edition}</p>}
+                    {fiche.editeur && (
+                      <p className="comic-editeur" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <Building2 size={14} />
+                        <span>{fiche.editeur}</span>
+                      </p>
+                    )}
+                    {fiche.annee && (
+                      <p className="comic-annee" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <Calendar size={14} />
+                        <span>{fiche.annee}</span>
+                      </p>
+                    )}
+                    {fiche.numero_edition && (
+                      <p className="comic-edition" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <Bookmark size={14} />
+                        <span>Édition #{fiche.numero_edition}</span>
+                      </p>
+                    )}
 
                     {fiche.auteur_couverture && (
-                      <p className="comic-auteur">🎨 Couverture: {fiche.auteur_couverture}</p>
+                      <p className="comic-auteur" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <Palette size={14} />
+                        <span>Couverture: {fiche.auteur_couverture}</span>
+                      </p>
                     )}
 
                     {fiche.autres_auteurs && fiche.autres_auteurs.length > 0 && (
-                      <p className="comic-auteurs">✍️ {fiche.autres_auteurs.join(', ')}</p>
+                      <p className="comic-auteurs" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <PenTool size={14} />
+                        <span>{fiche.autres_auteurs.join(', ')}</span>
+                      </p>
                     )}
 
-                    <p className="comic-etat">⭐ État: {fiche.etat}</p>
+                    <p className="comic-etat" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Star size={14} />
+                      <span>État: {fiche.etat}</span>
+                    </p>
 
-                    {fiche.isbn && <p className="comic-isbn">📖 ISBN: {fiche.isbn}</p>}
+                    {fiche.isbn && (
+                      <p className="comic-isbn" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <BookOpen size={14} />
+                        <span>ISBN: {fiche.isbn}</span>
+                      </p>
+                    )}
                   </div>
 
                   {fiche.description && (
@@ -205,7 +238,9 @@ export default function FicheList() {
                     />
                   ) : (
                     <div className="comic-placeholder">
-                      <div className="placeholder-icon">📚</div>
+                      <div className="placeholder-icon">
+                        <Library size={48} />
+                      </div>
                       <div className="placeholder-text">Pas d'image</div>
                     </div>
                   )}

@@ -1,3 +1,4 @@
+import { Save, Construction, CheckCircle, RefreshCw } from 'lucide-react';
 import Modal from '../Modal/Modal';
 import { Button } from '../ui';
 import './ComicEditModal.css';
@@ -50,7 +51,10 @@ export default function ComicEditModal({
       actions={
         <div className="edit-modal-actions">
           <Button onClick={handleSave} className="btn-save">
-            💾 Sauvegarder
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <Save size={18} />
+              <span>Sauvegarder</span>
+            </div>
           </Button>
           <Button variant="cancel" onClick={onClose}>
             Annuler
@@ -60,13 +64,25 @@ export default function ComicEditModal({
     >
       <div className="edit-modal-content">
         <div className="edit-placeholder">
-          <h3>🚧 Fonctionnalité d'édition</h3>
+          <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Construction size={22} />
+            <span>Fonctionnalité d'édition</span>
+          </h3>
           <p>L'édition des comics sera disponible dans une prochaine version.</p>
           <p>Pour le moment, vous pouvez :</p>
           <ul>
-            <li>✅ Voir tous les détails du comic</li>
-            <li>✅ Supprimer le comic</li>
-            <li>🔄 Ajouter de nouveaux comics</li>
+            <li style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <CheckCircle size={16} />
+              <span>Voir tous les détails du comic</span>
+            </li>
+            <li style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <CheckCircle size={16} />
+              <span>Supprimer le comic</span>
+            </li>
+            <li style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <RefreshCw size={16} />
+              <span>Ajouter de nouveaux comics</span>
+            </li>
           </ul>
           <div className="current-data">
             <h4>Données actuelles :</h4>
