@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { Image, Camera, Link as LinkIcon, X } from 'lucide-react';
 import { Button } from '../ui';
 import './ImageUpload.css';
 
@@ -109,7 +110,7 @@ export default function ImageUpload({ currentImageUrl, onImageChange, label }: I
             className="image-upload__remove"
             title="Supprimer l'image"
           >
-            ✕
+            <X size={20} />
           </button>
         </div>
       )}
@@ -138,7 +139,8 @@ export default function ImageUpload({ currentImageUrl, onImageChange, label }: I
             id="file-upload"
           />
           <label htmlFor="file-upload" className="btn btn--secondary image-upload__btn">
-            📁 Galerie
+            <Image size={18} />
+            <span>Galerie</span>
           </label>
 
           {/* Bouton pour prendre une photo (mobile) */}
@@ -152,7 +154,8 @@ export default function ImageUpload({ currentImageUrl, onImageChange, label }: I
             id="camera-upload"
           />
           <label htmlFor="camera-upload" className="btn btn--secondary image-upload__btn">
-            📸 Photo
+            <Camera size={18} />
+            <span>Photo</span>
           </label>
 
           {/* Toggle pour URL */}
@@ -161,7 +164,17 @@ export default function ImageUpload({ currentImageUrl, onImageChange, label }: I
             onClick={() => setUseUrl(!useUrl)}
             className="btn btn--secondary image-upload__btn"
           >
-            {useUrl ? '📷 Retour' : '🔗 URL'}
+            {useUrl ? (
+              <>
+                <Camera size={18} />
+                <span>Retour</span>
+              </>
+            ) : (
+              <>
+                <LinkIcon size={18} />
+                <span>URL</span>
+              </>
+            )}
           </button>
         </div>
       )}
